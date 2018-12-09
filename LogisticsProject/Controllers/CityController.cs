@@ -26,9 +26,9 @@ namespace LogisticsProject.Controllers
                 cities = query.ToList();
             }
 
-            HttpClient client = new HttpClient();
-            client.BaseAddress = new Uri("https://maps.googleapis.com/");
-            HttpResponseMessage response = await client.GetAsync(path);
+            //HttpClient client = new HttpClient();
+            //client.BaseAddress = new Uri("https://maps.googleapis.com/");
+            //HttpResponseMessage response = client.GetAsync(path);
 
             return View(cities);
         }

@@ -8,6 +8,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HttpClient", "HttpClient\HttpClient.csproj", "{781FA26E-DA93-4583-AEE8-A0ECE205E0B8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoogleApiClient", "GoogleApiClient\GoogleApiClient.csproj", "{EBB9CAA3-3B44-4C7F-87F9-4A7C3D0A95E9}"
+	ProjectSection(ProjectDependencies) = postProject
+		{38EBEAC1-4625-402F-9337-A1F0FEACFB0E} = {38EBEAC1-4625-402F-9337-A1F0FEACFB0E}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

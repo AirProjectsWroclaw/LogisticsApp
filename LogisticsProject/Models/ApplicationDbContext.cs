@@ -15,6 +15,7 @@ namespace LogisticsProject.Models
 
         
         public DbSet<City> Cities { get; set; }
+        public DbSet<Route> Routes { get; set; }
     }
 
     //public class MyEntity
