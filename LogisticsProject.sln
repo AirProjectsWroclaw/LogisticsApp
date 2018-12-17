@@ -12,6 +12,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoogleApiClient", "GoogleAp
 		{38EBEAC1-4625-402F-9337-A1F0FEACFB0E} = {38EBEAC1-4625-402F-9337-A1F0FEACFB0E}
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TravellingSalesmanProblem", "TravellingSalesmanProblem\TravellingSalesmanProblem.csproj", "{990A0731-52BA-4047-AF80-77D7A6EC45A1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,6 +32,10 @@ Global
 		{EBB9CAA3-3B44-4C7F-87F9-4A7C3D0A95E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EBB9CAA3-3B44-4C7F-87F9-4A7C3D0A95E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EBB9CAA3-3B44-4C7F-87F9-4A7C3D0A95E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{990A0731-52BA-4047-AF80-77D7A6EC45A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{990A0731-52BA-4047-AF80-77D7A6EC45A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{990A0731-52BA-4047-AF80-77D7A6EC45A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{990A0731-52BA-4047-AF80-77D7A6EC45A1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

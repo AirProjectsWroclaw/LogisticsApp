@@ -10,6 +10,11 @@ namespace TravellingSalesmanProblem
     {
         public int x { get; set; }
         public int y { get; set; }
+        public int CityId { get; set; }
+        public string CityName { get; set; }
+        public double Latitude { get; set; }
+        public double Longitude { get; set; }
+        public double Weight { get; set; }
 
         public City ()
         {
@@ -18,22 +23,33 @@ namespace TravellingSalesmanProblem
             this.y = rnd.Next(0, 201);
         }
 
-        public City(int x, int y)
+        public City(LogisticsProject.Models.City city, double weight)
         {
-            this.x = x;
-            this.y = y;
+            this.CityId = city.CityId;
+            this.CityName = city.CityName;
+            this.Latitude = city.Latitude;
+            this.Longitude = city.Longitude;
+            this.Weight = weight;
         }
 
         public double DistanceTo(City city)
         {
-            int xDistance = Math.Abs(this.x - city.x);
-            int yDistance = Math.Abs(this.y - city.y);
-            return Math.Sqrt(xDistance * xDistance + yDistance * yDistance);
+            //int xDistance = Math.Abs(this.x - city.x);
+            //int yDistance = Math.Abs(this.y - city.y);
+            //return Math.Sqrt(xDistance * xDistance + yDistance * yDistance);
+            using (LogisticsProject.Models.ApplicationDbContext db = new LogisticsProject.Models.ApplicationDbContext())
+            {
+                LogisticsProject.Models.Route route = (from r in db.Routes
+                                                       where (r.cityFrom.CityId == this.CityId
+                                                       && r.cityTo.CityId == city.CityId)
+                                                       select r).First();
+                return route.distance;
+            }
         }
 
         public override string ToString()
         {
-            return this.x + ", " + this.y;
+            return this.CityName + " [" + this.Longitude + ", " + this.Latitude + "] ";
         }
     }
 }

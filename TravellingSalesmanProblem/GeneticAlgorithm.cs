@@ -45,12 +45,12 @@ namespace TravellingSalesmanProblem
 
         private static void Mutate(Tour tour)
         {
-            for(int tourPos1 = 0; tourPos1 < tour.TourSize(); tourPos1++)
+            for(int tourPos1 = 1; tourPos1 < tour.TourSize(); tourPos1++)
             {
                 //Apply mutation rate
                 if(rand.Next(0,10)/10.0 < mutationRate)
                 {
-                    int tourPos2 = (int)(tour.TourSize() * rand.Next(0,10)/10.0);
+                    int tourPos2 = (int)((tour.TourSize()-1) * rand.Next(0,10)/10.0 +1);
 
                     City city1 = tour.GetCity(tourPos1);
                     City city2 = tour.GetCity(tourPos2);
