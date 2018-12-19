@@ -17,6 +17,7 @@ namespace TravellingSalesmanProblem
                 citiesDb = (from c in db.Cities
                           select c).ToList();
             }
+            //przypisanie listy
             List<City> citiesSalesman = new List<City>(citiesDb.Count());
 
             for (int i = 6; i < 12; i++)

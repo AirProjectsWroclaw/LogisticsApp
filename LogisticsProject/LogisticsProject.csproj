@@ -159,6 +159,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AppController.cs" />
     <Compile Include="Controllers\CityController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -173,9 +174,14 @@
     <Compile Include="Migrations\201811181128416_InitialCreate1.Designer.cs">
       <DependentUpon>201811181128416_InitialCreate1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201812182129038_migration.cs" />
+    <Compile Include="Migrations\201812182129038_migration.Designer.cs">
+      <DependentUpon>201812182129038_migration.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
     <Compile Include="Models\City.cs" />
+    <Compile Include="Models\FormModel.cs" />
     <Compile Include="Models\Model1.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -190,6 +196,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\LogisticsProject.Models.ApplicationDbContext.mdf" />
+    <Content Include="App_Data\LogisticsProject.Models.ApplicationDbContext_log.ldf">
+      <DependentUpon>LogisticsProject.Models.ApplicationDbContext.mdf</DependentUpon>
+    </Content>
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -239,10 +249,9 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\City\Index.cshtml" />
+    <Content Include="Views\App\AppForm.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -262,6 +271,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201811181128416_InitialCreate1.resx">
       <DependentUpon>201811181128416_InitialCreate1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812182129038_migration.resx">
+      <DependentUpon>201812182129038_migration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

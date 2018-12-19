@@ -1,0 +1,93 @@
+﻿@model LogisticsProject.Models.FormModel
+@{
+    ViewBag.Title = "AppForm";
+}
+<script>
+    var Count = 0;
+    var element = {};
+    var cart = [];
+
+    function Onclick() {
+        var table = document.getElementById('myTable');
+        var wynikDisplay = document.getElementById('wynik');
+        var row = table.insertRow(0);
+        var odjazd = row.insertCell(0);
+        var przyjazd = row.insertCell(1);
+        var masa = row.insertCell(2);
+
+        masa.innerHTML = document.getElementById('weightId').value;
+        odjazd.innerHTML = document.getElementById('pierwsze').value;
+        przyjazd.innerHTML = document.getElementById('drugie').value;
+        element.masa = masa;
+        element.odjazd = odjazd;
+        element.przyjazd = przyjazd;
+        cart.push(element);
+        Count = Count + 1;
+        wynikDisplay.innerHTML = Count;
+    }
+
+    function Send() {
+        $.ajax({
+            type: "POST",
+//            url: "/App/AppForm",
+            url: @Url.Action("AppForm","App"),
+            contentType: "application/json",
+            data: JSON.stringify(cart),
+            success: function(data) { console.log(data); },
+            complete: function(data) {}
+        });
+
+    };
+
+</script>
+@*<input id="pierwsze" type="text" name="pierwsze" />
+<input id="drugie" type="text" name="drugie" />*@
+@* <button name="OnClick" onclick="Onclick()">Click me</button> *@
+<h2>AppForm</h2>
+
+<table class="table" id="myTable">
+    <tr>
+        <th>
+            Odjazd
+        </th>
+        <th>
+            Przyjazd
+        </th>
+    </tr>
+
+    <tr>
+        <td></td>
+        <td></td>
+    </tr>
+
+</table>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+
+        Z:
+        @Html.DropDownList("citiesFrom", ViewData["citiesFrom"] as IEnumerable<SelectListItem>, htmlAttributes: new { @class = "form-control",@id="pierwsze" })
+        Do:
+        @Html.DropDownList("citiesTo", ViewData["citiesTo"] as IEnumerable<SelectListItem>, htmlAttributes: new { @class = "form-control",@id="drugie" })
+        Masa:
+        <input type="text" id="weightId" class="form-control"/>
+      
+    </div>
+
+    
+}
+<div class="form-group">
+    <div class="col-md-offset-2 col-md-10">
+        <button name="OnClick" onclick="Onclick()">Dodaj</button>
+        @* <input type="submit" value="Dodaj" class="btn btn-default"/> *@
+    </div>
+</div>
+<div class="form-group">
+    <div class="col-md-offset-2 col-md-10">
+        <button class="btn-danger" name="OnClick" onclick="Onclick()">Wyslij</button>
+        @* <input type="submit" value="Dodaj" class="btn btn-default"/> *@
+    </div>
+</div>
+<div id="wynik">nic jeszcze</div>
