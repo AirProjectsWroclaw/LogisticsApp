@@ -1,0 +1,28 @@
+﻿@model LogisticsProject.Models.FormModel
+
+@{
+    ViewBag.Title = "AppForm";
+}
+
+<h2>AppForm</h2>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+
+        Z:
+        @Html.DropDownList("citiesFrom", ViewData["citiesFrom"] as IEnumerable<SelectListItem>, htmlAttributes: new { @class = "form-control" })
+        Do:
+        @Html.DropDownList("citiesTo", ViewData["citiesTo"] as IEnumerable<SelectListItem>, htmlAttributes: new { @class = "form-control" })
+
+        @Html.TextBox("cities", null, new { @class = "form-control" })
+
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Dodaj" class="btn btn-default" />
+        </div>
+    </div>
+}

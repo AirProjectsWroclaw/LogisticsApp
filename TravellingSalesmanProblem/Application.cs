@@ -19,11 +19,20 @@ namespace TravellingSalesmanProblem
             }
             List<City> citiesSalesman = new List<City>(citiesDb.Count());
 
-            for (int i = 6; i < 12; i++)
-            {
-                citiesSalesman.Add(new City(citiesDb[i], i*10 + 10));
-                TourManager.AddCity(citiesSalesman[i-6]);
-            }
+            //for (int i = 6; i < 12; i++)
+            //{
+            //    citiesSalesman.Add(new City(citiesDb[i], i*10 + 10));
+            //    TourManager.AddCity(citiesSalesman[i-6]);
+            //}
+
+            TourManager.AddCity(new City(citiesDb[0], 5));
+            TourManager.AddCity(new City(citiesDb[3], 5));
+            TourManager.AddCity(new City(citiesDb[7], 5));
+            TourManager.AddCity(new City(citiesDb[2], 6));
+            TourManager.AddCity(new City(citiesDb[9], 50));
+            TourManager.SetMaxFuelConsump(20);
+            TourManager.TruckLoad = 80;
+
 
             Population population = new Population(50, true);
             Console.WriteLine("Initial distance : " + population.GetFittest().GetDistance());

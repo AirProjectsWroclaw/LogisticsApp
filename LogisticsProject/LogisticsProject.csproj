@@ -159,6 +159,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AppController.cs" />
     <Compile Include="Controllers\CityController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -173,9 +174,14 @@
     <Compile Include="Migrations\201811181128416_InitialCreate1.Designer.cs">
       <DependentUpon>201811181128416_InitialCreate1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201812181814525_migration.cs" />
+    <Compile Include="Migrations\201812181814525_migration.Designer.cs">
+      <DependentUpon>201812181814525_migration.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
     <Compile Include="Models\City.cs" />
+    <Compile Include="Models\FormModel.cs" />
     <Compile Include="Models\Model1.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -188,6 +194,11 @@
     </Compile>
     <Compile Include="Models\Route.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TravellingSalesmanProblem\AlgCity.cs" />
+    <Compile Include="TravellingSalesmanProblem\GeneticAlgorithm.cs" />
+    <Compile Include="TravellingSalesmanProblem\Population.cs" />
+    <Compile Include="TravellingSalesmanProblem\Tour.cs" />
+    <Compile Include="TravellingSalesmanProblem\TourManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -239,6 +250,7 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\City\Index.cshtml" />
+    <Content Include="Views\App\AppForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -262,6 +274,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201811181128416_InitialCreate1.resx">
       <DependentUpon>201811181128416_InitialCreate1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812181814525_migration.resx">
+      <DependentUpon>201812181814525_migration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

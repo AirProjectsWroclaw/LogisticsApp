@@ -1,8 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 
 namespace LogisticsProject.Models
 {
-    public class City
+    public class City : SelectListItem
     {
         [Required]
         public int CityId { get; set; }
