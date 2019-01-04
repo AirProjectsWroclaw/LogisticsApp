@@ -15,7 +15,7 @@ namespace TravellingSalesmanProblem
         public double Latitude { get; set; }
         public double Longitude { get; set; }
         public double Weight { get; set; }
-
+        public int Truck { get; set; }
         public AlgCity ()
         {
             Random rnd = new Random();
@@ -32,19 +32,44 @@ namespace TravellingSalesmanProblem
             this.Weight = weight;
         }
 
+        public AlgCity(AlgCity algCity)
+        {
+            this.CityId = algCity.CityId;
+            this.CityName = algCity.CityName;
+            this.Latitude = algCity.Latitude;
+            this.Longitude = algCity.Longitude;
+            this.Weight = algCity.Weight;
+        }
+
         public double DistanceTo(AlgCity city)
         {
             //int xDistance = Math.Abs(this.x - city.x);
             //int yDistance = Math.Abs(this.y - city.y);
             //return Math.Sqrt(xDistance * xDistance + yDistance * yDistance);
-            using (LogisticsProject.Models.ApplicationDbContext db = new LogisticsProject.Models.ApplicationDbContext())
+            if (!TourManager.IsRoutesListSet())
             {
-                LogisticsProject.Models.Route route = (from r in db.Routes
+                using (LogisticsProject.Models.ApplicationDbContext db = new LogisticsProject.Models.ApplicationDbContext())
+                {
+                    List<LogisticsProject.Models.Route> routes = (from r in db.Routes.Include("cityFrom").Include("cityTo")
+                                                                  select r).ToList();
+                    TourManager.SetRoutesList(routes);
+                    LogisticsProject.Models.Route route = (from r in db.Routes
+                                                           where (r.cityFrom.CityId == this.CityId
+                                                           && r.cityTo.CityId == city.CityId)
+                                                           select r).First();
+                    return route.distance;
+                }
+            }
+            else
+            {
+                List<LogisticsProject.Models.Route> routes = TourManager.GetRoutesList();
+                LogisticsProject.Models.Route route = (from r in routes
                                                        where (r.cityFrom.CityId == this.CityId
                                                        && r.cityTo.CityId == city.CityId)
                                                        select r).First();
                 return route.distance;
             }
+        
         }
 
         public override string ToString()

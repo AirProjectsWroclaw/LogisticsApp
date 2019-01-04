@@ -32,11 +32,13 @@ namespace TravellingSalesmanProblem
         }
 
         // Creates random tour
-        public void GenerateIndividual(double fuel)
+        public void GenerateIndividual(double fuel, Random random)
         {
-            for(int cityIndex = 0; cityIndex < TourManager.NumberOfCities(); cityIndex++)
+            for (int cityIndex = 0; cityIndex < TourManager.NumberOfCities(); cityIndex++)
             {
-                SetCity(cityIndex, TourManager.GetCity(cityIndex));
+                AlgCity algCity = new AlgCity(TourManager.GetCity(cityIndex));
+                algCity.Truck = random.Next(1, 4);
+                SetCity(cityIndex, algCity);
             }
             SetMaxFuel(fuel);
         }
@@ -57,7 +59,7 @@ namespace TravellingSalesmanProblem
         {
             if(fitness == 0)
             {
-                fitness = 1 / (double)GetDistance();
+                fitness = 1 / (double)GetTotalDistance();
             }
             return fitness;
         }
@@ -67,35 +69,101 @@ namespace TravellingSalesmanProblem
             return tour[cityIndex].Weight;
         }
 
-        public int GetDistance()
+        public int GetTruckDistance(int truckId)
         {
-            if(distance == 0)
+            double truckTourDistance = 0;
+            AlgCity fromCity = null;
+            AlgCity destinationCity = null;
+            for (int cityIndex = 0; cityIndex < TourSize(); cityIndex++)
             {
-                double tourDistance = 0;
-
-                for(int cityIndex = 0; cityIndex < TourSize(); cityIndex++)
+                if (cityIndex == 0 || GetCity(cityIndex).Truck == truckId)
                 {
-                    AlgCity fromCity = GetCity(cityIndex);
-
-                    AlgCity destinationCity;
-
-                    if(cityIndex+1 < TourSize())
+                    // First origin (happen when cityIndex == 0)
+                    if (fromCity == null)
                     {
-                        destinationCity = GetCity(cityIndex + 1);
+                        fromCity = GetCity(cityIndex);
                     }
+                    // Next origins are previous destinations
                     else
                     {
-                        destinationCity = GetCity(0);
+                        fromCity = destinationCity;
                     }
+
+                    // searching next destination
+
+                    if (cityIndex < (TourSize() - 1) && GetCity(cityIndex + 1).Truck == truckId) destinationCity = GetCity(cityIndex + 1);
+                    while (cityIndex < (TourSize() - 1) && GetCity(cityIndex + 1).Truck != truckId)
+                    {
+                        cityIndex++;
+                        if (cityIndex + 1 >= TourSize())
+                        {
+                            // Back to start point
+                            destinationCity = GetCity(0);
+                            break;
+                        }
+                        else if (GetCity(cityIndex + 1).Truck == truckId)
+                        {
+                            // Next destination for this truck
+                            destinationCity = GetCity(cityIndex + 1);
+                            break;
+                        }
+                    }
+                    if (fromCity.CityName == destinationCity.CityName) break;
 
                     int actDist = (int)fromCity.DistanceTo(destinationCity);
                     double prevWeight = GetAllPreviousWeight(cityIndex);
 
 
-                    tourDistance += (actDist/100) * GetMaxFuel() * 
-                        (1+((GetTourWeight()-prevWeight)/GetTruckLoad())) * (1/ GetWeight(cityIndex));
+                    truckTourDistance += (actDist / 100) * GetMaxFuel() *
+                    (1 + ((GetTourWeight() - prevWeight) / GetTruckLoad())) * (1 / GetWeight(cityIndex));
                 }
-                distance = (int)tourDistance;
+            }
+            int singleDistance = (int)truckTourDistance;
+
+            return singleDistance;
+        }
+
+        public int GetTotalDistance()
+        {
+            if(distance == 0)
+            {
+                int totalTourDistance = 0;
+                for (int truckIndex = 1; truckIndex < 4; truckIndex++)
+                {
+                    totalTourDistance += GetTruckDistance(truckIndex);
+                }
+                    //// Loop over all trucks
+                    //for (int truckIndex = 0; truckIndex < 5; truckIndex++)
+                    //{
+                    //    for (int cityIndex = 0; cityIndex < TourSize(); cityIndex++)
+                    //    {
+                    //        AlgCity fromCity = GetCity(cityIndex);
+                    //        AlgCity destinationCity;
+
+
+                    //        if (cityIndex + 1 < TourSize())
+                    //        {
+                    //            destinationCity = GetCity(cityIndex + 1);
+                    //        }
+                    //        else
+                    //        {
+                    //            // Back to start point
+                    //            destinationCity = GetCity(0);
+                    //        }
+
+                    //        // Check if actual truck is going to actual city
+                    //        if (destinationCity.Truck == truckIndex && fromCity.Truck == truckIndex )
+                    //        {
+                    //            int actDist = (int)fromCity.DistanceTo(destinationCity);
+                    //            double prevWeight = GetAllPreviousWeight(cityIndex);
+
+
+                    //            tourDistance += (actDist / 100) * GetMaxFuel() *
+                    //                (1 + ((GetTourWeight() - prevWeight) / GetTruckLoad())) * (1 / GetWeight(cityIndex));
+                    //        }
+                    //    }
+                    //}
+                    distance = totalTourDistance;
             }
             return distance;
         }
@@ -108,7 +176,11 @@ namespace TravellingSalesmanProblem
         //Check if tour constains a city
         public Boolean ContainsCity(AlgCity city)
         {
-            return tour.Contains(city);
+            foreach(AlgCity algCity in tour)
+            {
+                if (algCity != null && algCity.CityName == city.CityName) return true;
+            }
+            return false;
         }
 
         //Get completed transports weight
@@ -163,7 +235,7 @@ namespace TravellingSalesmanProblem
             string GeneString = "|";
             for(int i = 0; i < TourSize(); i++)
             {
-                GeneString += GetCity(i) + "|";
+                GeneString += GetCity(i) + ", Tir: "+ GetCity(i).Truck +"| \n";
             }
             return GeneString;
         }

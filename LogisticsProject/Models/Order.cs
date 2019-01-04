@@ -7,13 +7,30 @@ namespace LogisticsProject.Models
 {
     public class Order
     {
-        private int odjazd;
+        private string odjazd;
 
-        public int MyProperty
+        public string Odjazd
         {
             get { return odjazd; }
             set { odjazd = value; }
         }
+
+        private string przyjazd;
+
+        public string Przyjazd
+        {
+            get { return przyjazd; }
+            set { przyjazd = value; }
+        }
+
+        private double masa;
+
+        public double Masa
+        {
+            get { return masa; }
+            set { masa = value; }
+        }
+
 
     }
 }

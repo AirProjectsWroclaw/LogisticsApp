@@ -1,10 +1,56 @@
 ﻿@model LogisticsProject.Models.FormModel
-
 @{
-    ViewBag.Title = "AppForm";
-}
+                /**/
 
-<h2>AppForm</h2>
+                ViewBag.Title = "Aplikacja logistyczna wykorzystująca algorytm genetyczny";
+}
+<script>
+    var Count = 0;
+    var cart = [];
+
+    function Onclick() {
+        var table = document.getElementById('myTable');
+        var wynikDisplay = document.getElementById('wynik');
+        var row = table.insertRow(Count + 1);
+        var odjazd = row.insertCell(0);
+        var przyjazd = row.insertCell(1);
+        var masa = row.insertCell(2);
+        var element = {};
+
+        masa.innerHTML = document.getElementById('weightId').value;
+        odjazd.innerHTML = document.getElementById('pierwsze').value;
+        przyjazd.innerHTML = document.getElementById('drugie').value;
+        element.Masa = document.getElementById('weightId').value;
+        element.Odjazd = document.getElementById('pierwsze').value;
+        element.Przyjazd = document.getElementById('drugie').value;
+        cart.push(element);
+        Count = Count + 1;
+        wynikDisplay.innerHTML = Count;
+    };
+
+    function Send() {
+        var d = { "ordersList": cart };
+        $.ajax({
+            type: "POST",
+            url: "/App/AppForm",
+
+            contentType: "application/json",
+            data: JSON.stringify(d),
+            success: function (data) {
+                document.getElementById("tour").innerHTML = "Proponowana trasa\n" + data;
+                console.log(data);
+            },
+            complete: function (data) { }
+        });
+
+    };
+
+</script>
+@*<input id="pierwsze" type="text" name="pierwsze" />
+    <input id="drugie" type="text" name="drugie" />*@
+@* <button name="OnClick" onclick="Onclick()">Click me</button> *@
+<h2>Aplikacja logistyczna wykorzystująca algorytm genetyczny</h2>
+
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
@@ -12,17 +58,57 @@
     <div class="form-group">
 
         Z:
-        @Html.DropDownList("citiesFrom", ViewData["citiesFrom"] as IEnumerable<SelectListItem>, htmlAttributes: new { @class = "form-control" })
+        @Html.DropDownList("citiesFrom", ViewData["citiesFrom"] as IEnumerable<SelectListItem>, htmlAttributes: new { @class = "form-control", @id = "pierwsze" })
         Do:
-        @Html.DropDownList("citiesTo", ViewData["citiesTo"] as IEnumerable<SelectListItem>, htmlAttributes: new { @class = "form-control" })
-
-        @Html.TextBox("cities", null, new { @class = "form-control" })
+        @Html.DropDownList("citiesTo", ViewData["citiesTo"] as IEnumerable<SelectListItem>, htmlAttributes: new { @class = "form-control", @id = "drugie" })
+        Masa:
+        <input type="text" id="weightId" class="form-control" />
 
     </div>
 
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Dodaj" class="btn btn-default" />
-        </div>
-    </div>
+
 }
+<div class="form-group">
+    <div class="col-md-offset-2 col-md-10">
+        <button name="OnClick" onclick="Onclick()">Dodaj</button>
+        @* <input type="submit" value="Dodaj" class="btn btn-default"/> *@
+    </div>
+</div>
+<div class="form-group">
+    <div class="col-md-offset-2 col-md-10">
+        <button class="btn-danger" name="Send" onclick="Send()">Wyslij</button>
+        @* <input type="submit" value="Dodaj" class="btn btn-default"/> *@
+    </div>
+</div>
+<div id="wynik">nic jeszcze</div>
+
+<div id="tour"></div>
+
+@if (Model.bestTour != null)
+{
+<div>
+    Wyliczona trasa:
+    @Model.bestTour.ToString())
+</div>
+}
+
+<table class="table" id="myTable">
+    <tr>
+        <th>
+            Odjazd
+        </th>
+        <th>
+            Przyjazd
+        </th>
+        <th>
+            Masa
+        </th>
+    </tr>
+
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+
+</table>
