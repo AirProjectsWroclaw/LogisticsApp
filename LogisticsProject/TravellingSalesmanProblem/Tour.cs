@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Web.WebPages;
 
 namespace TravellingSalesmanProblem
 {
@@ -232,12 +234,60 @@ namespace TravellingSalesmanProblem
 
         public override string ToString()
         {
-            string GeneString = "|";
-            for(int i = 0; i < TourSize(); i++)
+            //TOJSON
+            string[] tabTruck = new string[3];
+            string[] tabTruckDistance = new string[3];
+            string all;
+
+            for (int j = 0; j < tabTruck.Length; j++)
             {
-                GeneString += GetCity(i) + ", Tir: "+ GetCity(i).Truck +"| \n";
+                for (int i = 0; i < TourSize(); i++)
+                {
+                    if (i==0)
+                    {
+                        
+                    }
+                    if (GetCity(i).Truck == j + 1)
+                    {
+                        if (tabTruck[j] == null)
+                        {
+                            tabTruck[j] = "\"" + GetCity(i).ToString() + "\"";
+                        }
+                        else
+                        {
+                            tabTruck[j] = tabTruck[j] + ",\"" + GetCity(i).ToString() + "\"";
+                        }
+                    }
+
+                }
+
+                tabTruckDistance[j] = GetTruckDistance(j+1).ToString();
             }
-            return GeneString;
+
+            all = "{ \"Trucks\" : [";
+            bool isNotFirst = true;
+            for (int j = 0; j < 3; j++)
+            {
+                if (tabTruckDistance[j] != "0" && isNotFirst==false)
+                {
+                    all = all + ",";
+                    all = all + "{\"" + "Cities" + "\"" + ":[" + tabTruck[j] + "],";
+                    all = all + "\"Distance\" :" + "\"" + tabTruckDistance[j] + "\"}";
+                }
+                else if (tabTruckDistance[j] != "0" && isNotFirst==true)
+                {
+                    all = all + "{\"" + "Cities" + "\"" + ":[" + tabTruck[j] + "],";
+                    all = all + "\"Distance\" :" + "\"" + tabTruckDistance[j] + "\"}";
+                    isNotFirst = false;
+                }
+
+
+            }
+
+            all = all + "]}";
+           
+
+            return all;
         }
     }
 }

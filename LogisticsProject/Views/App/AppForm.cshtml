@@ -37,8 +37,25 @@
             contentType: "application/json",
             data: JSON.stringify(d),
             success: function (data) {
-                document.getElementById("tour").innerHTML = "Proponowana trasa\n" + data;
-                console.log(data);
+                var obj = JSON.parse(data);
+                var table = document.getElementById('myData');
+                var row;
+                var Trucks;
+                var Cities;
+                var Distance;
+                for (var i = 0; i < obj.Trucks.length; i++) {
+                     row = table.insertRow(i+1);
+                    Trucks = row.insertCell(0);
+                    Cities = row.insertCell(1);
+                    Distance = row.insertCell(2);
+                    Trucks.innerHTML = i+1;
+                    Cities.innerHTML = obj.Trucks[i].Cities;
+                    Distance.innerHTML = obj.Trucks[i].Distance;
+                }
+                
+                //create table with elements 
+                /*document.getElementById("tour").innerHTML = "Proponowana trasa\n" + data;
+                console.log(data);*/
             },
             complete: function (data) { }
         });
@@ -82,7 +99,23 @@
 </div>
 <div id="wynik">nic jeszcze</div>
 
-<div id="tour"></div>
+
+    <table class="table" id="myData">
+        <tr>
+            <th>
+                Trucks:
+            </th>
+            <th>
+                Cities:
+            </th>
+            <th>
+                Distance:
+            </th>
+        </tr>
+
+
+    </table>
+
 
 @if (Model.bestTour != null)
 {
