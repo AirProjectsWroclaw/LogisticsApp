@@ -39,6 +39,7 @@ namespace TravellingSalesmanProblem
             this.Latitude = algCity.Latitude;
             this.Longitude = algCity.Longitude;
             this.Weight = algCity.Weight;
+            this.Truck = algCity.Truck;
         }
 
         public double DistanceTo(AlgCity city)

@@ -47,6 +47,7 @@ namespace TravellingSalesmanProblem
         {
             for(int tourPos1 = 1; tourPos1 < tour.TourSize(); tourPos1++)
             {
+                Boolean choosed = false;
                 //Apply mutation rate
                 if(rand.Next(0,10)/10.0 < mutationRate)
                 {
@@ -54,11 +55,44 @@ namespace TravellingSalesmanProblem
 
                     AlgCity city1 = new AlgCity(tour.GetCity(tourPos1));
                     AlgCity city2 = new AlgCity(tour.GetCity(tourPos2));
+                    
+                    tour.trucksLoad[city1.Truck] += city1.Weight;
+                    tour.trucksLoad[city2.Truck] += city2.Weight;
 
-                    city1.Truck = rand.Next(1, 4);
-                    city2.Truck = rand.Next(1, 4);
-                    tour.SetCity(tourPos2, city1);
-                    tour.SetCity(tourPos1, city2);
+                    if (city1.Weight < city2.Weight)
+                    {
+                        AlgCity citySwitch = city1;
+                        city1 = city2;
+                        city2 = citySwitch;
+                    }
+                    //city1.Truck = rand.Next(1, 4);
+                    //city2.Truck = rand.Next(1, 4);
+                    while (!choosed)
+                    {
+                        city1.Truck = rand.Next(1, 4);
+                        if (tour.trucksLoad[city1.Truck] >= city1.Weight)
+                        {
+                            tour.trucksLoad[city1.Truck] -= city1.Weight;
+                            tour.SetCity(tourPos2, city1);
+                            choosed = true;
+                        }
+                    }
+
+                    choosed = false;
+
+                    while (!choosed)
+                    {
+                        city2.Truck = rand.Next(1, 4);
+                        if (tour.trucksLoad[city2.Truck] >= city2.Weight)
+                        {
+                            tour.trucksLoad[city2.Truck] -= city2.Weight;
+                            tour.SetCity(tourPos1, city2);
+                            choosed = true;
+                        }
+                    }
+
+                    //tour.SetCity(tourPos2, city1);
+                    //tour.SetCity(tourPos1, city2);
                 }
             }
         }
@@ -71,16 +105,19 @@ namespace TravellingSalesmanProblem
             double startPos = random.Next(0,11)/10.0 * parent1.TourSize();
             double endPos = random.Next(0,11)/10.0 * parent1.TourSize();
 
+
             for (int i = 0; i < child.TourSize(); i++)
             {
                 if (startPos < endPos && i > startPos && i < endPos)
                 {
+                    if(i!=0) child.trucksLoad[parent1.GetCity(i).Truck] -= parent1.GetCity(i).Weight;
                     child.SetCity(i, parent1.GetCity(i));
                 }
                 else if (startPos > endPos)
                 {
                     if (!(i < startPos && i > endPos))
                     {
+                        if (i != 0) child.trucksLoad[parent1.GetCity(i).Truck] -= parent1.GetCity(i).Weight;
                         child.SetCity(i, parent1.GetCity(i));
                     };
                 }
@@ -95,8 +132,21 @@ namespace TravellingSalesmanProblem
                     {
                         if (child.GetCity(j) == null)
                         {
-                            child.SetCity(j, parent2.GetCity(i));
+                            AlgCity city = new AlgCity(parent2.GetCity(i));
+                            Boolean choosed = false;
+                            while (!choosed)
+                            {
+                                city.Truck = rand.Next(1, 4);
+                                if (child.trucksLoad[city.Truck] >= city.Weight)
+                                {
+                                    child.trucksLoad[city.Truck] -= city.Weight;
+                                    child.SetCity(j, city);
+
+                                    choosed = true;
+                                }
+                            }
                             break;
+
                         }
                     }
                 }

@@ -18,6 +18,7 @@ namespace TravellingSalesmanProblem
         private double truckLoad = 0;
         private double tourWeight = 0;
         private double maxFuel = 0;
+        public double[] trucksLoad;
 
         //Constructor for blank tour
         public Tour()
@@ -25,6 +26,11 @@ namespace TravellingSalesmanProblem
             for(int i = 0; i < TourManager.NumberOfCities(); i++)
             {
                 tour.Add(null);
+            }
+            this.trucksLoad = new double[TourManager.trucksLoad.Count()];
+            for(int index = 0; index < TourManager.trucksLoad.Count(); index++)
+            {
+                this.trucksLoad[index] = TourManager.trucksLoad[index];
             }
         }
 
@@ -38,9 +44,19 @@ namespace TravellingSalesmanProblem
         {
             for (int cityIndex = 0; cityIndex < TourManager.NumberOfCities(); cityIndex++)
             {
+                Boolean choosed = false;
                 AlgCity algCity = new AlgCity(TourManager.GetCity(cityIndex));
                 algCity.Truck = random.Next(1, 4);
-                SetCity(cityIndex, algCity);
+                while (!choosed)
+                {
+                    algCity.Truck = random.Next(1, 4);
+                    if (this.trucksLoad[algCity.Truck] >= algCity.Weight)
+                    {
+                        this.trucksLoad[algCity.Truck] -= algCity.Weight;
+                        SetCity(cityIndex, algCity);
+                        choosed = true;
+                    }
+                }
             }
             SetMaxFuel(fuel);
         }
@@ -116,11 +132,11 @@ namespace TravellingSalesmanProblem
                     double prevWeight = GetAllPreviousWeight(cityIndex);
 
                     //fuel consumption
-                    truckTourDistance += (actDist / 100) * GetMaxFuel() *
-                    (1 + ((GetTourWeight() - prevWeight) / GetTruckLoad())) * (1 / GetWeight(cityIndex));
+                    //truckTourDistance += (actDist / 100) * GetMaxFuel() *
+                    //(1 + ((GetTourWeight() - prevWeight) / GetTruckLoad())) * (1 / GetWeight(cityIndex));
 
                     //distance
-                    //truckTourDistance += actDist/1000;
+                    truckTourDistance += actDist/1000;
                 }
             }
             int singleDistance = (int)truckTourDistance;

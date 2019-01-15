@@ -14,6 +14,8 @@ namespace TravellingSalesmanProblem
         private static List<Route> routes = new List<Route>();
         private static double maxFuelConsumption;
         private static double truckLoad;
+        public static double[] trucksLoad = { 20, 20, 20, 20 };
+
 
         public static double TruckLoad { get => truckLoad; set => truckLoad = value; }
 
