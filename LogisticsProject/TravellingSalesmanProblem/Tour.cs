@@ -52,7 +52,7 @@ namespace TravellingSalesmanProblem
                     algCity.Truck = random.Next(1, 4);
                     if (this.trucksLoad[algCity.Truck] >= algCity.Weight)
                     {
-                        this.trucksLoad[algCity.Truck] -= algCity.Weight;
+                        if (this.tour[0] != null) this.trucksLoad[algCity.Truck] -= algCity.Weight;
                         SetCity(cityIndex, algCity);
                         choosed = true;
                     }

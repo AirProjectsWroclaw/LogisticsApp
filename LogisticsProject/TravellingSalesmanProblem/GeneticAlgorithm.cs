@@ -55,11 +55,11 @@ namespace TravellingSalesmanProblem
 
                     AlgCity city1 = new AlgCity(tour.GetCity(tourPos1));
                     AlgCity city2 = new AlgCity(tour.GetCity(tourPos2));
-                    
+
+
                     tour.trucksLoad[city1.Truck] += city1.Weight;
                     tour.trucksLoad[city2.Truck] += city2.Weight;
-
-                    if (city1.Weight < city2.Weight)
+                    if(city1.Weight < city2.Weight)
                     {
                         AlgCity citySwitch = city1;
                         city1 = city2;
@@ -72,6 +72,7 @@ namespace TravellingSalesmanProblem
                         city1.Truck = rand.Next(1, 4);
                         if (tour.trucksLoad[city1.Truck] >= city1.Weight)
                         {
+                            //tour.trucksLoad[tour.GetCity(tourPos2).Truck] += tour.GetCity(tourPos2).Weight;
                             tour.trucksLoad[city1.Truck] -= city1.Weight;
                             tour.SetCity(tourPos2, city1);
                             choosed = true;
@@ -85,6 +86,7 @@ namespace TravellingSalesmanProblem
                         city2.Truck = rand.Next(1, 4);
                         if (tour.trucksLoad[city2.Truck] >= city2.Weight)
                         {
+                            //tour.trucksLoad[tour.GetCity(tourPos1).Truck] += tour.GetCity(tourPos1).Weight;
                             tour.trucksLoad[city2.Truck] -= city2.Weight;
                             tour.SetCity(tourPos1, city2);
                             choosed = true;
@@ -105,19 +107,18 @@ namespace TravellingSalesmanProblem
             double startPos = random.Next(0,11)/10.0 * parent1.TourSize();
             double endPos = random.Next(0,11)/10.0 * parent1.TourSize();
 
-
             for (int i = 0; i < child.TourSize(); i++)
             {
                 if (startPos < endPos && i > startPos && i < endPos)
                 {
-                    if(i!=0) child.trucksLoad[parent1.GetCity(i).Truck] -= parent1.GetCity(i).Weight;
+                    if(i != 0)child.trucksLoad[parent1.GetCity(i).Truck] -= parent1.GetCity(i).Weight;
                     child.SetCity(i, parent1.GetCity(i));
                 }
                 else if (startPos > endPos)
                 {
                     if (!(i < startPos && i > endPos))
                     {
-                        if (i != 0) child.trucksLoad[parent1.GetCity(i).Truck] -= parent1.GetCity(i).Weight;
+                        if (i != 0)child.trucksLoad[parent1.GetCity(i).Truck] -= parent1.GetCity(i).Weight;
                         child.SetCity(i, parent1.GetCity(i));
                     };
                 }
