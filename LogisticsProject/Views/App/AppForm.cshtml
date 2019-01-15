@@ -1,10 +1,18 @@
 ﻿@model LogisticsProject.Models.FormModel
 @{
-                /**/
+    /**/
 
-                ViewBag.Title = "Aplikacja logistyczna wykorzystująca algorytm genetyczny";
+    ViewBag.Title = "Aplikacja logistyczna wykorzystująca algorytm genetyczny";
 }
+
+
 <script>
+
+
+    //<!--    This code tells the browser to execute the "Initialize" method only when the complete document model has been loaded. -- >
+
+
+
     var Count = 0;
     var cart = [];
 
@@ -30,6 +38,61 @@
 
     function Send() {
         var d = { "ordersList": cart };
+        var d = {
+            "ordersList":
+                [
+                    {
+                        "Masa": "2",
+                        "Odjazd": "Munich",
+                        "Przyjazd": "Łódź"
+                    },
+                    {
+                        "Masa": "2",
+                        "Odjazd": "Munich",
+                        "Przyjazd": "Vienna"
+                    },
+                    {
+                        "Masa": "2",
+                        "Odjazd": "Munich",
+                        "Przyjazd": "Warsaw"
+                    },
+                    {
+                        "Masa": "2",
+                        "Odjazd": "Munich",
+                        "Przyjazd": "Gdańsk"
+                    },
+                    {
+                        "Masa": "2",
+                        "Odjazd": "Munich",
+                        "Przyjazd": "Brussels"
+                    },
+                    {
+                        "Masa": "2",
+                        "Odjazd": "Munich",
+                        "Przyjazd": "Amsterdam"
+                    },
+                    {
+                        "Masa": "2",
+                        "Odjazd": "Munich",
+                        "Przyjazd": "Rome"
+                    },
+                    {
+                        "Masa": "2",
+                        "Odjazd": "Munich",
+                        "Przyjazd": "Kraków"
+                    },
+                    {
+                        "Masa": "2",
+                        "Odjazd": "Munich",
+                        "Przyjazd": "Katowice"
+                    },
+                    {
+                        "Masa": "2",
+                        "Odjazd": "Munich",
+                        "Przyjazd": "Lisbon"
+                    }
+                ]
+        };
         $.ajax({
             type: "POST",
             url: "/App/AppForm",
@@ -44,16 +107,16 @@
                 var Cities;
                 var Distance;
                 for (var i = 0; i < obj.Trucks.length; i++) {
-                     row = table.insertRow(i+1);
+                    row = table.insertRow(i + 1);
                     Trucks = row.insertCell(0);
                     Cities = row.insertCell(1);
                     Distance = row.insertCell(2);
-                    Trucks.innerHTML = i+1;
+                    Trucks.innerHTML = i + 1;
                     Cities.innerHTML = obj.Trucks[i].Cities;
                     Distance.innerHTML = obj.Trucks[i].Distance;
                 }
-                
-                //create table with elements 
+                initMap(obj);
+                //create table with elements
                 /*document.getElementById("tour").innerHTML = "Proponowana trasa\n" + data;
                 console.log(data);*/
             },
@@ -63,6 +126,7 @@
     };
 
 </script>
+
 @*<input id="pierwsze" type="text" name="pierwsze" />
     <input id="drugie" type="text" name="drugie" />*@
 @* <button name="OnClick" onclick="Onclick()">Click me</button> *@
@@ -100,29 +164,30 @@
 <div id="wynik">nic jeszcze</div>
 
 
-    <table class="table" id="myData">
-        <tr>
-            <th>
-                Trucks:
-            </th>
-            <th>
-                Cities:
-            </th>
-            <th>
-                Distance:
-            </th>
-        </tr>
+
+<table class="table" id="myData">
+    <tr>
+        <th>
+            Trucks:
+        </th>
+        <th>
+            Cities:
+        </th>
+        <th>
+            Distance:
+        </th>
+    </tr>
 
 
-    </table>
+</table>
 
 
 @if (Model.bestTour != null)
 {
-<div>
-    Wyliczona trasa:
-    @Model.bestTour.ToString())
-</div>
+    <div>
+        Wyliczona trasa:
+        @Model.bestTour.ToString())
+    </div>
 }
 
 <table class="table" id="myTable">
@@ -145,3 +210,4 @@
     </tr>
 
 </table>
+

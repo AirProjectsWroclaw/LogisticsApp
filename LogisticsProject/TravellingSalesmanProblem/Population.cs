@@ -11,6 +11,7 @@ namespace TravellingSalesmanProblem
         //Population of candidate tours
         Tour[] tours;
 
+
         public Population(int populationSize, Boolean initialise)
         {
             tours = new Tour[populationSize];

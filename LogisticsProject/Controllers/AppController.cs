@@ -80,13 +80,14 @@ namespace LogisticsProject.Controllers
             TourManager.TruckLoad = 35;
 
 
-            Population population = new Population(80, true);
+            Population population = new Population(200, true);
             Debug.WriteLine("Initial total distance : " + population.GetFittest().GetTotalDistance());
 
             population = GeneticAlgorithm.EvolvePopulation(population);
-            for (int i = 0; i < 200; i++)
+            for (int i = 0; i < 1000; i++)
             {
                 population = GeneticAlgorithm.EvolvePopulation(population);
+                Debug.WriteLine(population.GetFittest().GetTotalDistance());
             }
 
            

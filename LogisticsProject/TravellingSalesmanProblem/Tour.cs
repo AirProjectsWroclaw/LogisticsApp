@@ -115,9 +115,12 @@ namespace TravellingSalesmanProblem
                     int actDist = (int)fromCity.DistanceTo(destinationCity);
                     double prevWeight = GetAllPreviousWeight(cityIndex);
 
-
+                    //fuel consumption
                     truckTourDistance += (actDist / 100) * GetMaxFuel() *
                     (1 + ((GetTourWeight() - prevWeight) / GetTruckLoad())) * (1 / GetWeight(cityIndex));
+
+                    //distance
+                    //truckTourDistance += actDist/1000;
                 }
             }
             int singleDistance = (int)truckTourDistance;
@@ -127,8 +130,9 @@ namespace TravellingSalesmanProblem
 
         public int GetTotalDistance()
         {
-            if(distance == 0)
-            {
+            //if(distance == 0)
+            //{
+            distance = 0;
                 int totalTourDistance = 0;
                 for (int truckIndex = 1; truckIndex < 4; truckIndex++)
                 {
@@ -166,7 +170,7 @@ namespace TravellingSalesmanProblem
                     //    }
                     //}
                     distance = totalTourDistance;
-            }
+            //}
             return distance;
         }
 

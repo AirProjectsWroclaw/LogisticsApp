@@ -8,8 +8,8 @@ namespace TravellingSalesmanProblem
 {
     public class GeneticAlgorithm
     {
-        private const double mutationRate = 0.015;
-        private const int tournamentSize = 5;
+        private const double mutationRate = 0.5;
+        private const int tournamentSize = 20;
         private const bool elitism = true;
         static Random rand = new Random();
 
@@ -52,9 +52,11 @@ namespace TravellingSalesmanProblem
                 {
                     int tourPos2 = (int)((tour.TourSize()-1) * rand.Next(0,10)/10.0 +1);
 
-                    AlgCity city1 = tour.GetCity(tourPos1);
-                    AlgCity city2 = tour.GetCity(tourPos2);
+                    AlgCity city1 = new AlgCity(tour.GetCity(tourPos1));
+                    AlgCity city2 = new AlgCity(tour.GetCity(tourPos2));
 
+                    city1.Truck = rand.Next(1, 4);
+                    city2.Truck = rand.Next(1, 4);
                     tour.SetCity(tourPos2, city1);
                     tour.SetCity(tourPos1, city2);
                 }
