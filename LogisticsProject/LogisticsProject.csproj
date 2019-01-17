@@ -257,6 +257,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\City\Index.cshtml" />
     <Content Include="Views\App\AppForm.cshtml" />
+    <Content Include="Views\App\MyPartialView.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

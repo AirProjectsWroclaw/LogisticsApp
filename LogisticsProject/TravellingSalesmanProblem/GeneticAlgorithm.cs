@@ -140,7 +140,7 @@ namespace TravellingSalesmanProblem
                                 city.Truck = rand.Next(1, 4);
                                 if (child.trucksLoad[city.Truck] >= city.Weight)
                                 {
-                                    child.trucksLoad[city.Truck] -= city.Weight;
+                                    if(i != 0) child.trucksLoad[city.Truck] -= city.Weight;
                                     child.SetCity(j, city);
 
                                     choosed = true;

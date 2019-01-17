@@ -11,6 +11,12 @@ namespace LogisticsProject.Controllers
 {
     public class AppController : Controller
     {
+
+        public PartialViewResult CreatePartialView()
+        {
+            return PartialView("MyPartialView");
+        }
+
         // GET: App
         public ActionResult AppForm()
         {

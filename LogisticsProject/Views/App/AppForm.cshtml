@@ -37,62 +37,63 @@
     };
 
     function Send() {
+        var obj;
         var d = { "ordersList": cart };
-        //var d = {
-        //    "ordersList":
-        //        [
-        //            {
-        //                "Masa": "5",
-        //                "Odjazd": "Munich",
-        //                "Przyjazd": "Łódź"
-        //            },
-        //            {
-        //                "Masa": "5",
-        //                "Odjazd": "Munich",
-        //                "Przyjazd": "Vienna"
-        //            },
-        //            {
-        //                "Masa": "5",
-        //                "Odjazd": "Munich",
-        //                "Przyjazd": "Warsaw"
-        //            },
-        //            {
-        //                "Masa": "5",
-        //                "Odjazd": "Munich",
-        //                "Przyjazd": "Gdańsk"
-        //            },
-        //            {
-        //                "Masa": "5",
-        //                "Odjazd": "Munich",
-        //                "Przyjazd": "Brussels"
-        //            },
-        //            {
-        //                "Masa": "5",
-        //                "Odjazd": "Munich",
-        //                "Przyjazd": "Amsterdam"
-        //            },
-        //            {
-        //                "Masa": "5",
-        //                "Odjazd": "Munich",
-        //                "Przyjazd": "Rome"
-        //            },
-        //            {
-        //                "Masa": "5",
-        //                "Odjazd": "Munich",
-        //                "Przyjazd": "Kraków"
-        //            },
-        //            {
-        //                "Masa": "5",
-        //                "Odjazd": "Munich",
-        //                "Przyjazd": "Katowice"
-        //            },
-        //            {
-        //                "Masa": "5",
-        //                "Odjazd": "Munich",
-        //                "Przyjazd": "Lisbon"
-        //            }
-        //        ]
-        //};
+        var d = {
+            "ordersList":
+                [
+                    {
+                        "Masa": "5",
+                        "Odjazd": "Munich",
+                        "Przyjazd": "Łódź"
+                    },
+                    {
+                        "Masa": "5",
+                        "Odjazd": "Munich",
+                        "Przyjazd": "Vienna"
+                    },
+                    {
+                        "Masa": "5",
+                        "Odjazd": "Munich",
+                        "Przyjazd": "Warsaw"
+                    },
+                    {
+                        "Masa": "5",
+                        "Odjazd": "Munich",
+                        "Przyjazd": "Gdańsk"
+                    },
+                    {
+                        "Masa": "5",
+                        "Odjazd": "Munich",
+                        "Przyjazd": "Brussels"
+                    },
+                    {
+                        "Masa": "5",
+                        "Odjazd": "Munich",
+                        "Przyjazd": "Amsterdam"
+                    },
+                    {
+                        "Masa": "5",
+                        "Odjazd": "Munich",
+                        "Przyjazd": "Rome"
+                    },
+                    {
+                        "Masa": "5",
+                        "Odjazd": "Munich",
+                        "Przyjazd": "Kraków"
+                    },
+                    {
+                        "Masa": "5",
+                        "Odjazd": "Munich",
+                        "Przyjazd": "Katowice"
+                    },
+                    {
+                        "Masa": "5",
+                        "Odjazd": "Munich",
+                        "Przyjazd": "Lisbon"
+                    }
+                ]
+        };
         $.ajax({
             type: "POST",
             url: "/App/AppForm",
@@ -100,7 +101,7 @@
             contentType: "application/json",
             data: JSON.stringify(d),
             success: function (data) {
-                var obj = JSON.parse(data);
+                obj = JSON.parse(data);
                 var table = document.getElementById('myData');
                 var row;
                 var Trucks;
@@ -115,12 +116,17 @@
                     Cities.innerHTML = obj.Trucks[i].Cities;
                     Distance.innerHTML = obj.Trucks[i].Distance;
                 }
-                initMap(obj);
+                //initMap(obj);
+                
+
                 //create table with elements
                 /*document.getElementById("tour").innerHTML = "Proponowana trasa\n" + data;
                 console.log(data);*/
             },
-            complete: function (data) { }
+            complete: function (data) {
+                var printWindow = window.open('/App/CreatePartialView', '_blank', 'left=100,top=100,width=400,height=300,toolbar=1,resizable=0');
+                printWindow.myObj = obj;
+            }
         });
 
     };
@@ -161,9 +167,9 @@
         @* <input type="submit" value="Dodaj" class="btn btn-default"/> *@
     </div>
 </div>
-<div id="wynik">nic jeszcze</div>
+Ilość zleceń: <div id="wynik">0</div>
 
-
+<h1>Proponowana trasa: </h1>
 
 <table class="table" id="myData">
     <tr>
