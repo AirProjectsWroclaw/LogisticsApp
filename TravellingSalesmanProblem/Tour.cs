@@ -13,6 +13,9 @@ namespace TravellingSalesmanProblem
         //Cache
         private double fitness = 0;
         private int distance = 0;
+        private double truckLoad = 0;
+        private double tourWeight = 0;
+        private double maxFuel = 0;
 
         //Constructor for blank tour
         public Tour()
@@ -29,12 +32,13 @@ namespace TravellingSalesmanProblem
         }
 
         // Creates random tour
-        public void GenerateIndividual()
+        public void GenerateIndividual(double fuel)
         {
             for(int cityIndex = 0; cityIndex < TourManager.NumberOfCities(); cityIndex++)
             {
                 SetCity(cityIndex, TourManager.GetCity(cityIndex));
             }
+            SetMaxFuel(fuel);
         }
 
         public City GetCity(int cityIndex)
@@ -58,11 +62,16 @@ namespace TravellingSalesmanProblem
             return fitness;
         }
 
+        public double GetWeight(int cityIndex)
+        {
+            return tour[cityIndex].Weight;
+        }
+
         public int GetDistance()
         {
             if(distance == 0)
             {
-                int tourDistance = 0;
+                double tourDistance = 0;
 
                 for(int cityIndex = 0; cityIndex < TourSize(); cityIndex++)
                 {
@@ -79,9 +88,14 @@ namespace TravellingSalesmanProblem
                         destinationCity = GetCity(0);
                     }
 
-                    tourDistance += (int)fromCity.DistanceTo(destinationCity);
+                    int actDist = (int)fromCity.DistanceTo(destinationCity);
+                    double prevWeight = GetAllPreviousWeight(cityIndex);
+
+
+                    tourDistance += (actDist/100) * GetMaxFuel() * 
+                        (1-(GetTourWeight()-prevWeight)/GetTruckLoad()) * (1/ GetWeight(cityIndex));
                 }
-                distance = tourDistance;
+                distance = (int)tourDistance;
             }
             return distance;
         }
@@ -95,6 +109,52 @@ namespace TravellingSalesmanProblem
         public Boolean ContainsCity(City city)
         {
             return tour.Contains(city);
+        }
+
+        //Get completed transports weight
+        public double GetAllPreviousWeight(int cityIndex)
+        {
+            double weightSum = 0;
+            for(int i = 0; i < cityIndex; i++)
+            {
+                weightSum += GetWeight(i);
+            }
+            return weightSum;
+        }
+
+        public double GetTruckLoad()
+        {
+            return this.truckLoad;
+        }
+
+        public void SetTruckLoad(double load)
+        {
+            this.truckLoad = load;
+        }
+
+        public double GetTourWeight()
+        {
+            double weightSum = 0;
+            for (int i = 0; i < TourSize(); i++)
+            {
+                weightSum += GetWeight(i);
+            }
+            return weightSum;
+        }
+
+        public void SetTourWeight(double weight)
+        {
+            this.tourWeight = weight;
+        }
+
+        public double GetMaxFuel()
+        {
+            return this.maxFuel;
+        }
+
+        public void SetMaxFuel(double fuel)
+        {
+            this.maxFuel = fuel;
         }
 
         public override string ToString()

@@ -11,9 +11,12 @@ namespace TravellingSalesmanProblem
         //Population of candidate tours
         Tour[] tours;
 
+
         public Population(int populationSize, Boolean initialise)
         {
             tours = new Tour[populationSize];
+            Random random = new Random();
+
 
             if (initialise)
             {
@@ -21,7 +24,7 @@ namespace TravellingSalesmanProblem
                 for(int i = 0; i < populationSize; i++)
                 {
                     Tour newTour = new Tour();
-                    newTour.GenerateIndividual(TourManager.GetMaxFuelConsump());
+                    newTour.GenerateIndividual(TourManager.GetMaxFuelConsump(), random);
                     SaveTour(i, newTour);
                 }
             }

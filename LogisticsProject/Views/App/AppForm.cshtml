@@ -1,0 +1,219 @@
+﻿@model LogisticsProject.Models.FormModel
+@{
+    /**/
+
+    ViewBag.Title = "Aplikacja logistyczna wykorzystująca algorytm genetyczny";
+}
+
+
+<script>
+
+
+    //<!--    This code tells the browser to execute the "Initialize" method only when the complete document model has been loaded. -- >
+
+
+
+    var Count = 0;
+    var cart = [];
+
+    function Onclick() {
+        var table = document.getElementById('myTable');
+        var wynikDisplay = document.getElementById('wynik');
+        var row = table.insertRow(Count + 1);
+        var odjazd = row.insertCell(0);
+        var przyjazd = row.insertCell(1);
+        var masa = row.insertCell(2);
+        var element = {};
+
+        masa.innerHTML = document.getElementById('weightId').value;
+        odjazd.innerHTML = document.getElementById('pierwsze').value;
+        przyjazd.innerHTML = document.getElementById('drugie').value;
+        element.Masa = document.getElementById('weightId').value;
+        element.Odjazd = document.getElementById('pierwsze').value;
+        element.Przyjazd = document.getElementById('drugie').value;
+        cart.push(element);
+        Count = Count + 1;
+        wynikDisplay.innerHTML = Count;
+    };
+
+    function Send() {
+        var obj;
+        var d = { "ordersList": cart };
+        var d = {
+            "ordersList":
+                [
+                    {
+                        "Masa": "5",
+                        "Odjazd": "Munich",
+                        "Przyjazd": "Łódź"
+                    },
+                    {
+                        "Masa": "5",
+                        "Odjazd": "Munich",
+                        "Przyjazd": "Vienna"
+                    },
+                    {
+                        "Masa": "5",
+                        "Odjazd": "Munich",
+                        "Przyjazd": "Warsaw"
+                    },
+                    {
+                        "Masa": "5",
+                        "Odjazd": "Munich",
+                        "Przyjazd": "Gdańsk"
+                    },
+                    {
+                        "Masa": "5",
+                        "Odjazd": "Munich",
+                        "Przyjazd": "Brussels"
+                    },
+                    {
+                        "Masa": "5",
+                        "Odjazd": "Munich",
+                        "Przyjazd": "Amsterdam"
+                    },
+                    {
+                        "Masa": "5",
+                        "Odjazd": "Munich",
+                        "Przyjazd": "Rome"
+                    },
+                    {
+                        "Masa": "5",
+                        "Odjazd": "Munich",
+                        "Przyjazd": "Kraków"
+                    },
+                    {
+                        "Masa": "5",
+                        "Odjazd": "Munich",
+                        "Przyjazd": "Katowice"
+                    },
+                    {
+                        "Masa": "5",
+                        "Odjazd": "Munich",
+                        "Przyjazd": "Lisbon"
+                    }
+                ]
+        };
+        $.ajax({
+            type: "POST",
+            url: "/App/AppForm",
+
+            contentType: "application/json",
+            data: JSON.stringify(d),
+            success: function (data) {
+                obj = JSON.parse(data);
+                var table = document.getElementById('myData');
+                var row;
+                var Trucks;
+                var Cities;
+                var Distance;
+                for (var i = 0; i < obj.Trucks.length; i++) {
+                    row = table.insertRow(i + 1);
+                    Trucks = row.insertCell(0);
+                    Cities = row.insertCell(1);
+                    Distance = row.insertCell(2);
+                    Trucks.innerHTML = i + 1;
+                    Cities.innerHTML = obj.Trucks[i].Cities;
+                    Distance.innerHTML = obj.Trucks[i].Distance;
+                }
+                //initMap(obj);
+                
+
+                //create table with elements
+                /*document.getElementById("tour").innerHTML = "Proponowana trasa\n" + data;
+                console.log(data);*/
+            },
+            complete: function (data) {
+                var printWindow = window.open('/App/CreatePartialView', '_blank', 'left=100,top=100,width=400,height=300,toolbar=1,resizable=0');
+                printWindow.myObj = obj;
+            }
+        });
+
+    };
+
+</script>
+
+@*<input id="pierwsze" type="text" name="pierwsze" />
+    <input id="drugie" type="text" name="drugie" />*@
+@* <button name="OnClick" onclick="Onclick()">Click me</button> *@
+<h2>Aplikacja logistyczna wykorzystująca algorytm genetyczny</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+
+        Z:
+        @Html.DropDownList("citiesFrom", ViewData["citiesFrom"] as IEnumerable<SelectListItem>, htmlAttributes: new { @class = "form-control", @id = "pierwsze" })
+        Do:
+        @Html.DropDownList("citiesTo", ViewData["citiesTo"] as IEnumerable<SelectListItem>, htmlAttributes: new { @class = "form-control", @id = "drugie" })
+        Masa:
+        <input type="text" id="weightId" class="form-control" />
+
+    </div>
+
+
+}
+<div class="form-group">
+    <div class="col-md-offset-2 col-md-10">
+        <button name="OnClick" onclick="Onclick()">Dodaj</button>
+        @* <input type="submit" value="Dodaj" class="btn btn-default"/> *@
+    </div>
+</div>
+<div class="form-group">
+    <div class="col-md-offset-2 col-md-10">
+        <button class="btn-danger" name="Send" onclick="Send()">Wyslij</button>
+        @* <input type="submit" value="Dodaj" class="btn btn-default"/> *@
+    </div>
+</div>
+Ilość zleceń: <div id="wynik">0</div>
+
+<h1>Proponowana trasa: </h1>
+
+<table class="table" id="myData">
+    <tr>
+        <th>
+            Trucks:
+        </th>
+        <th>
+            Cities:
+        </th>
+        <th>
+            Distance:
+        </th>
+    </tr>
+
+
+</table>
+
+
+@if (Model.bestTour != null)
+{
+    <div>
+        Wyliczona trasa:
+        @Model.bestTour.ToString())
+    </div>
+}
+
+<table class="table" id="myTable">
+    <tr>
+        <th>
+            Odjazd
+        </th>
+        <th>
+            Przyjazd
+        </th>
+        <th>
+            Masa
+        </th>
+    </tr>
+
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+
+</table>
+
