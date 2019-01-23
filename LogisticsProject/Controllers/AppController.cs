@@ -11,6 +11,39 @@ namespace LogisticsProject.Controllers
 {
     public class AppController : Controller
     {
+        public PartialViewResult CreatePartialView()
+        {
+            return PartialView("MyPartialView");
+        }
+
+        public ActionResult AddClient()
+        {
+            List<SelectListItem> citiesFrom = new List<SelectListItem>();
+            List<City> citiesDb;
+            FormModel formModel;
+            // Create and add our cities from database 
+            using (var db = new ApplicationDbContext())
+            {
+                citiesDb = (from c in db.Cities
+                    select c).ToList();
+                foreach (City city in citiesDb)
+                {
+                    citiesFrom.Add(city);
+
+                }
+
+            }
+
+            formModel = new FormModel
+            {
+                citiesFrom = new SelectList(citiesFrom, "CityName", "CityName").AsQueryable()
+            }; 
+                return View(formModel);
+            }
+        
+
+        //            return View("AddClient");
+
         // GET: App
         public ActionResult AppForm()
         {
@@ -77,7 +110,7 @@ namespace LogisticsProject.Controllers
             }
 
             TourManager.SetMaxFuelConsump(20);
-            TourManager.TruckLoad = 35;
+            TourManager.TruckLoad = 20;
 
 
             Population population = new Population(200, true);

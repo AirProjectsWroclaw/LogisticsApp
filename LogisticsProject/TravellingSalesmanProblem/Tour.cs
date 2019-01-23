@@ -42,14 +42,44 @@ namespace TravellingSalesmanProblem
         // Creates random tour
         public void GenerateIndividual(double fuel, Random random)
         {
+            //bardziej deterministycznie - wpisywanie dla posortowanych
+            /*List<AlgCity> listaMiast = new List<AlgCity>();
+            for (int i = 0; i < TourManager.NumberOfCities(); i++)
+            {
+                listaMiast.Add(new AlgCity(TourManager.GetCity(i)));
+            }
+            for (int i = 0; i < listaMiast.Count; i++)
+            {
+                listaMiast[i].Weight
+            }
+            listaMiast[i].;*/
+
+            //odwrotnie dla truckow
+            /*for (int i = 1; i < 4; i++)
+            {
+                AlgCity algCity = new AlgCity(TourManager.GetCity(cityIndex));
+
+            }*/
+
+
             for (int cityIndex = 0; cityIndex < TourManager.NumberOfCities(); cityIndex++)
             {
                 Boolean choosed = false;
                 AlgCity algCity = new AlgCity(TourManager.GetCity(cityIndex));
-                algCity.Truck = random.Next(1, 4);
+                //algCity.Truck = random.Next(1, 4);
+
+
+
+
+
+
                 while (!choosed)
                 {
+                    
                     algCity.Truck = random.Next(1, 4);
+
+
+
                     if (this.trucksLoad[algCity.Truck] >= algCity.Weight)
                     {
                         this.trucksLoad[algCity.Truck] -= algCity.Weight;

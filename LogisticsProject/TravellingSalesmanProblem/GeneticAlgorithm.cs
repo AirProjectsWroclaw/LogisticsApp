@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.ApplicationInsights.DataContracts;
 
 namespace TravellingSalesmanProblem
 {
     public class GeneticAlgorithm
     {
-        private const double mutationRate = 0.5;
-        private const int tournamentSize = 20;
+        private const double mutationRate = 0;
+        private const int tournamentSize = 15;
         private const bool elitism = true;
         static Random rand = new Random();
 
@@ -17,7 +18,8 @@ namespace TravellingSalesmanProblem
         public static Population EvolvePopulation(Population pop)
         {
             Population newPopulation = new Population(pop.PopulationSize(), false);
-
+            double sum=0;
+            double sumtruck=0;
             int elitismOffset = 0;
             if (elitism)
             {
@@ -29,10 +31,31 @@ namespace TravellingSalesmanProblem
             {
                 Tour parent1 = TournamentSelection(pop);
                 Tour parent2 = TournamentSelection(pop);
+                //------------------------------------
+                var child = Crossover(parent1, parent2);
 
-                Tour child = Crossover(parent1, parent2);
+                while (child == null)
+                {
+                    child = Crossover(parent1, parent2);
+                }
+                /*for (int j = 1; j < 4; j++)
+                {
+                    sumtruck = sumtruck + child.trucksLoad[j];
+                }
+                for (int j = 0; j < child.TourSize(); j++)
+                {
+                    sum = sum + child.GetCity(j).Weight;
+                }
 
-                newPopulation.SaveTour(i, child);
+                if (sum!=60-sumtruck)
+                {
+                    Console.WriteLine("brak wszystkich maist");
+                    
+                }*/
+                
+                
+                    newPopulation.SaveTour(i, child);
+
             }
 
             for(int i = elitismOffset; i < newPopulation.PopulationSize(); i++)
@@ -105,12 +128,15 @@ namespace TravellingSalesmanProblem
             double startPos = random.Next(0,11)/10.0 * parent1.TourSize();
             double endPos = random.Next(0,11)/10.0 * parent1.TourSize();
 
+            int[] tab = {0,0,0,0};
 
             for (int i = 0; i < child.TourSize(); i++)
             {
                 if (startPos < endPos && i > startPos && i < endPos)
                 {
                     if(i!=0) child.trucksLoad[parent1.GetCity(i).Truck] -= parent1.GetCity(i).Weight;
+
+                    //
                     child.SetCity(i, parent1.GetCity(i));
                 }
                 else if (startPos > endPos)
@@ -118,6 +144,7 @@ namespace TravellingSalesmanProblem
                     if (!(i < startPos && i > endPos))
                     {
                         if (i != 0) child.trucksLoad[parent1.GetCity(i).Truck] -= parent1.GetCity(i).Weight;
+                        //
                         child.SetCity(i, parent1.GetCity(i));
                     };
                 }
@@ -136,13 +163,21 @@ namespace TravellingSalesmanProblem
                             Boolean choosed = false;
                             while (!choosed)
                             {
+
                                 city.Truck = rand.Next(1, 4);
+                                
                                 if (child.trucksLoad[city.Truck] >= city.Weight)
                                 {
                                     child.trucksLoad[city.Truck] -= city.Weight;
                                     child.SetCity(j, city);
 
                                     choosed = true;
+                                }
+                                else
+                                {
+                                    tab[city.Truck]++;
+                                    if (tab[1] != 0 && tab[2] != 0 && tab[3] != 0)
+                                        return null;
                                 }
                             }
                             break;
@@ -151,8 +186,11 @@ namespace TravellingSalesmanProblem
                     }
                 }
             }
-
+            
             return child;
+           
+           
+
         }
 
         private static Tour TournamentSelection(Population pop)
@@ -164,8 +202,8 @@ namespace TravellingSalesmanProblem
                 int randomId = (int)(rand.Next(0, 10)/10.0 * pop.PopulationSize());
                 tournament.SaveTour(i, pop.GetTour(randomId));
             }
-
-            Tour fittest = tournament.GetFittest();
+            Tour fittest = new Tour();
+            fittest = tournament.GetFittest();
             return fittest;
         }
     }

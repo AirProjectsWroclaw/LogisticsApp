@@ -1,0 +1,76 @@
+﻿
+@model LogisticsProject.Models.FormModel
+@{
+    /**/
+
+    ViewBag.Title = "Dodaj klienta";
+}
+<script>
+    var Count = 0;
+
+    function AddClient() {
+        var table = document.getElementById('myTable');
+        var row = table.insertRow(Count + 1);
+        var nazwa = row.insertCell(0);
+        var miasto = row.insertCell(1);
+        var ulica = row.insertCell(2);
+
+
+        nazwa.innerHTML = document.getElementById('nazwaFirmy').value;
+        miasto.innerHTML = document.getElementById('miasto').value;
+        ulica.innerHTML = document.getElementById('ulica').value;
+        Count = Count + 1;
+    }
+</script>
+
+<h2>Dodaj klienta</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+        Nazwa firmy:
+        <input type="text" class="form-control" placeholder="Nazwa firmy" id = "nazwaFirmy"/>
+        Miasto:
+        @Html.DropDownList("citiesFrom", ViewData["citiesFrom"] as IEnumerable<SelectListItem>, htmlAttributes: new { @class = "form-control", @id = "miasto", })
+        Ulica:
+        <input type="text" class="form-control" placeholder="Ulica" id = "ulica"/>
+
+
+    </div>
+}
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <button name="OnClick" onclick="AddClient()">Dodaj do listy klientów</button>
+        </div>
+    </div>
+<h2>Baza danych klientów</h2>
+<table class="table" id="myTable">
+<tbody>
+<tr>
+    <th>
+        Nazwa firmy
+    </th>
+    <th>
+        Miasto
+    </th>
+    <th>
+        Ulica
+    </th>
+</tr>
+
+<tr>
+    <td>Hurtownia narzędzi - Anatol</td><td>Wrocław</td><td>Strzegomska 5</td>
+</tr><tr>
+         <td>Hurtownia narzędzi - Black</td><td>Gdańsk</td><td>Wielka 33</td>
+</tr><tr>
+         <td>Hurtownia narzędzi - GAABI</td><td>Kraków</td><td>Piastowska 11</td>
+</tr><tr>
+         <td>Hurtownia narzędzi - Sibi</td><td>Stuttgart</td><td>Wiener StraBe</td>
+</tr><tr>
+ 
+</tr>
+
+</tbody>
+</table>

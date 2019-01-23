@@ -37,11 +37,12 @@
     };
 
     function Send() {
-        var d = { "ordersList": cart };
+        var obj;
+       // var d = { "ordersList": cart };
         var d = {
             "ordersList":
                 [
-                    {
+                    /*{
                         "Masa": "5",
                         "Odjazd": "Munich",
                         "Przyjazd": "Łódź"
@@ -50,14 +51,14 @@
                         "Masa": "5",
                         "Odjazd": "Munich",
                         "Przyjazd": "Vienna"
-                    },
+                    },*/
                     {
-                        "Masa": "5",
+                        "Masa": "17",
                         "Odjazd": "Munich",
                         "Przyjazd": "Warsaw"
                     },
                     {
-                        "Masa": "5",
+                        "Masa": "2",
                         "Odjazd": "Munich",
                         "Przyjazd": "Gdańsk"
                     },
@@ -77,17 +78,17 @@
                         "Przyjazd": "Rome"
                     },
                     {
-                        "Masa": "5",
+                        "Masa": "2",
                         "Odjazd": "Munich",
                         "Przyjazd": "Kraków"
                     },
                     {
-                        "Masa": "5",
+                        "Masa": "2",
                         "Odjazd": "Munich",
                         "Przyjazd": "Katowice"
                     },
                     {
-                        "Masa": "5",
+                        "Masa": "2",
                         "Odjazd": "Munich",
                         "Przyjazd": "Lisbon"
                     }
@@ -100,7 +101,7 @@
             contentType: "application/json",
             data: JSON.stringify(d),
             success: function (data) {
-                var obj = JSON.parse(data);
+                 obj = JSON.parse(data);
                 var table = document.getElementById('myData');
                 var row;
                 var Trucks;
@@ -115,12 +116,15 @@
                     Cities.innerHTML = obj.Trucks[i].Cities;
                     Distance.innerHTML = obj.Trucks[i].Distance;
                 }
-                initMap(obj);
+                //initMap(obj);
                 //create table with elements
                 /*document.getElementById("tour").innerHTML = "Proponowana trasa\n" + data;
                 console.log(data);*/
             },
-            complete: function (data) { }
+            complete: function(data) {
+                var printWindow = window.open('/App/CreatePartialView', '_blank', 'left=100,top=100,width=400,height=300,toolbar=1,resizable=0');
+                printWindow.myObj = obj;
+            }
         });
 
     };
@@ -151,13 +155,13 @@
 }
 <div class="form-group">
     <div class="col-md-offset-2 col-md-10">
-        <button name="OnClick" onclick="Onclick()">Dodaj</button>
+        <button name="OnClick" onclick="Onclick()">Dodaj do listy zleceń</button>
         @* <input type="submit" value="Dodaj" class="btn btn-default"/> *@
     </div>
 </div>
 <div class="form-group">
     <div class="col-md-offset-2 col-md-10">
-        <button class="btn-danger" name="Send" onclick="Send()">Wyslij</button>
+        <button class="btn-danger" name="Send" onclick="Send()">Oblicz trasy dla danych zleceń</button>
         @* <input type="submit" value="Dodaj" class="btn btn-default"/> *@
     </div>
 </div>
