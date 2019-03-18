@@ -10,7 +10,7 @@ using System.Web;
 using System.Web.Mvc;
 using TravellingSalesmanProblem;
 
-namespace LogisticsProject.Controllers
+namespace LogisticsProject.WebUI.Controllers
 {
     public class AppController : Controller
     {
