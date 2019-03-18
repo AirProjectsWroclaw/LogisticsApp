@@ -67,13 +67,12 @@ namespace LogisticsProject.Controllers
             }
         }
 
-        // GET: City/Edit/5
         public ActionResult Edit(int id)
         {
             return View();
         }
 
-        // POST: City/Edit/5
+
         [HttpPost]
         public ActionResult Edit(int id, FormCollection collection)
         {

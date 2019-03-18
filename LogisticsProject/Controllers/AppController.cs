@@ -20,7 +20,7 @@ namespace LogisticsProject.Controllers
         {
             List<SelectListItem> citiesFrom = new List<SelectListItem>();
             List<City> citiesDb;
-            FormModel formModel;
+            FormViewModel formModel;
             // Create and add our cities from database 
             using (var db = new ApplicationDbContext())
             {
@@ -34,9 +34,9 @@ namespace LogisticsProject.Controllers
 
             }
 
-            formModel = new FormModel
+            formModel = new FormViewModel
             {
-                citiesFrom = new SelectList(citiesFrom, "CityName", "CityName").AsQueryable()
+                CitiesFrom = new SelectList(citiesFrom, "CityName", "CityName").AsQueryable()
             }; 
                 return View(formModel);
             }
@@ -49,7 +49,7 @@ namespace LogisticsProject.Controllers
         {
             List<SelectListItem> citiesFrom = new List<SelectListItem>();
             List<SelectListItem> citiesTo = new List<SelectListItem>();
-            FormModel formModel;
+            FormViewModel formModel;
             List<City> citiesDb;
             // Create and add our cities from database 
             using (var db = new ApplicationDbContext())
@@ -66,16 +66,16 @@ namespace LogisticsProject.Controllers
             }
             //citiesFrom = citiesDb;
             //citiesTo = citiesDb;
-            formModel = new FormModel
+            formModel = new FormViewModel
             {
-                citiesFrom = new SelectList(citiesFrom, "CityName", "CityName").AsQueryable(),
-                citiesTo = new SelectList(citiesTo, "CityName", "CityName").AsQueryable(),
+                CitiesFrom = new SelectList(citiesFrom, "CityName", "CityName").AsQueryable(),
+                CitiesTo = new SelectList(citiesTo, "CityName", "CityName").AsQueryable(),
             };
             return View(formModel);
         }
 
         [HttpPost]
-        public string AppForm(Orders orders)
+        public string AppForm(List<OrderViewModel> orders)
         {
             List<AlgCity> cities = new List<AlgCity>();
             using (var db = new ApplicationDbContext())
@@ -85,18 +85,18 @@ namespace LogisticsProject.Controllers
                 //int cityInId = int.Parse(collection["citiesTo"]);
                 //int cityOutId = int.Parse(collection["citiesFrom"]);
 
-                for(int i = 0; i < orders.OrdersList.Count(); i++)
+                for(int i = 0; i < orders.Count(); i++)
                 {
                     if(i == 0)
                     {
-                        string cityOutName = orders.OrdersList.First().Odjazd;
+                        string cityOutName = orders.First().Odjazd;
                         int masaOdjazd = 5;
                         cities.Add(new AlgCity((from c in db.Cities
                                    where c.CityName == cityOutName
                                    select c).First(), masaOdjazd));
                     }
-                    string cityInName = orders.OrdersList[i].Przyjazd;
-                    double masaPrzyjazd = orders.OrdersList[i].Masa;
+                    string cityInName = orders[i].Przyjazd;
+                    double masaPrzyjazd = orders[i].Masa;
                     cities.Add(new AlgCity((from c in db.Cities
                                 where c.CityName == cityInName
                                 select c).First(),masaPrzyjazd));
@@ -131,6 +131,7 @@ namespace LogisticsProject.Controllers
             List<SelectListItem> citiesFrom = new List<SelectListItem>();
             List<SelectListItem> citiesTo = new List<SelectListItem>();
             List<City> citiesDb;
+
             // Create and add our cities from database 
             using (var db = new ApplicationDbContext())
             {
@@ -145,11 +146,11 @@ namespace LogisticsProject.Controllers
 
             }
 
-            FormModel formModel = new FormModel
+            FormViewModel formModel = new FormViewModel
             {
-                bestTour = population.GetFittest(),
-                citiesFrom = new SelectList(citiesFrom, "CityId", "CityName").AsQueryable(),
-                citiesTo = new SelectList(citiesTo, "CityId", "CityName").AsQueryable()
+                BestTour = population.GetFittest(),
+                CitiesFrom = new SelectList(citiesFrom, "CityId", "CityName").AsQueryable(),
+                CitiesTo = new SelectList(citiesTo, "CityId", "CityName").AsQueryable()
             };
 
             TourManager.ResetDestination();

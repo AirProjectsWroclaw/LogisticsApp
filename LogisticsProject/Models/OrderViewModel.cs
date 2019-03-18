@@ -5,7 +5,7 @@ using System.Web;
 
 namespace LogisticsProject.Models
 {
-    public class Order
+    public class OrderViewModel
     {
         private string odjazd;
 
