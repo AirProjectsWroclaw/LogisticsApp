@@ -39,12 +39,8 @@ namespace LogisticsProject.Controllers
                 CitiesFrom = new SelectList(citiesFrom, "CityName", "CityName").AsQueryable()
             }; 
                 return View(formModel);
-            }
+         }
         
-
-        //            return View("AddClient");
-
-        // GET: App
         public ActionResult AppForm()
         {
             List<SelectListItem> citiesFrom = new List<SelectListItem>();
