@@ -1,4 +1,7 @@
-﻿using LogisticsProject.Models;
+﻿using LogisticsProject.Domain;
+using LogisticsProject.Domain.Abstract;
+using LogisticsProject.Domain.Entities;
+using LogisticsProject.Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -11,6 +14,15 @@ namespace LogisticsProject.Controllers
 {
     public class AppController : Controller
     {
+        private ICityRepository cityRepository;
+        private IRouteRepository routeRepository;
+
+        public AppController(ICityRepository cityRepository, IRouteRepository routeRepository)
+        {
+            this.cityRepository = cityRepository;
+            this.routeRepository = routeRepository;
+        }
+
         public PartialViewResult CreatePartialView()
         {
             return PartialView("MyPartialView");
@@ -21,16 +33,14 @@ namespace LogisticsProject.Controllers
             List<SelectListItem> citiesFrom = new List<SelectListItem>();
             List<City> citiesDb;
             FormViewModel formModel;
-            // Create and add our cities from database 
-            using (var db = new ApplicationDbContext())
-            {
-                citiesDb = (from c in db.Cities
-                    select c).ToList();
-                foreach (City city in citiesDb)
-                {
-                    citiesFrom.Add(city);
 
-                }
+        
+            // add cities from db
+          
+            citiesDb = cityRepository.Cities.ToList();
+            foreach (City city in citiesDb)
+            {
+                citiesFrom.Add(city);
 
             }
 
@@ -39,7 +49,7 @@ namespace LogisticsProject.Controllers
                 CitiesFrom = new SelectList(citiesFrom, "CityName", "CityName").AsQueryable()
             }; 
                 return View(formModel);
-         }
+        }
         
         public ActionResult AppForm()
         {
@@ -48,10 +58,8 @@ namespace LogisticsProject.Controllers
             FormViewModel formModel;
             List<City> citiesDb;
             // Create and add our cities from database 
-            using (var db = new ApplicationDbContext())
-            {
-                 citiesDb = (from c in db.Cities
-                            select c).ToList();
+      
+                 citiesDb = cityRepository.Cities.ToList();
                 foreach (City city in citiesDb)
                 {
                     citiesFrom.Add(city);
@@ -59,7 +67,7 @@ namespace LogisticsProject.Controllers
                 }
                 
                 
-            }
+            
             //citiesFrom = citiesDb;
             //citiesTo = citiesDb;
             formModel = new FormViewModel
@@ -71,11 +79,14 @@ namespace LogisticsProject.Controllers
         }
 
         [HttpPost]
-        public string AppForm(List<OrderViewModel> orders)
+        public ActionResult AppForm(List<OrderViewModel> orders)
         {
-            List<AlgCity> cities = new List<AlgCity>();
-            using (var db = new ApplicationDbContext())
+            if(orders == null)
             {
+                return RedirectToAction("AppForm");
+            }
+            List<AlgCity> cities = new List<AlgCity>();
+        
                 int cityInId = 3;
                 int cityOutId = 4;
                 //int cityInId = int.Parse(collection["citiesTo"]);
@@ -87,18 +98,18 @@ namespace LogisticsProject.Controllers
                     {
                         string cityOutName = orders.First().Odjazd;
                         int masaOdjazd = 5;
-                        cities.Add(new AlgCity((from c in db.Cities
+                        cities.Add(new AlgCity((from c in cityRepository.Cities
                                    where c.CityName == cityOutName
                                    select c).First(), masaOdjazd));
                     }
                     string cityInName = orders[i].Przyjazd;
                     double masaPrzyjazd = orders[i].Masa;
-                    cities.Add(new AlgCity((from c in db.Cities
+                    cities.Add(new AlgCity((from c in cityRepository.Cities
                                 where c.CityName == cityInName
                                 select c).First(),masaPrzyjazd));
                 }
                 
-            }
+            
 
             foreach(var city in cities)
             {
@@ -129,9 +140,8 @@ namespace LogisticsProject.Controllers
             List<City> citiesDb;
 
             // Create and add our cities from database 
-            using (var db = new ApplicationDbContext())
-            {
-                citiesDb = (from c in db.Cities
+       
+                citiesDb = (from c in cityRepository.Cities
                             select c).ToList();
                 foreach (City city in citiesDb)
                 {
@@ -139,8 +149,7 @@ namespace LogisticsProject.Controllers
                     citiesTo.Add(city);
                 }
 
-
-            }
+                
 
             FormViewModel formModel = new FormViewModel
             {
@@ -151,7 +160,7 @@ namespace LogisticsProject.Controllers
 
             TourManager.ResetDestination();
 
-            return population.GetFittest().ToString();
+            return new JsonResult { Data = population.GetFittest().ToString() };
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using LogisticsProject.Domain;
+using LogisticsProject.Domain.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,14 +12,14 @@ namespace TravellingSalesmanProblem
     {
         public static void Main(string[] args)
         {
-            List<LogisticsProject.Models.City> citiesDb;
+            List<City> citiesDb;
             // Create and add our cities from database 
-            using (var db = new LogisticsProject.Models.ApplicationDbContext())
+            using (var db = new EFDbContext())
             {
                 citiesDb = (from c in db.Cities
                           select c).ToList();
             }
-            List<City> citiesSalesman = new List<City>(citiesDb.Count());
+            List<AlgCity> citiesSalesman = new List<AlgCity>(citiesDb.Count());
 
             //for (int i = 6; i < 12; i++)
             //{
@@ -25,11 +27,11 @@ namespace TravellingSalesmanProblem
             //    TourManager.AddCity(citiesSalesman[i-6]);
             //}
 
-            TourManager.AddCity(new City(citiesDb[0], 5));
-            TourManager.AddCity(new City(citiesDb[3], 5));
-            TourManager.AddCity(new City(citiesDb[7], 5));
-            TourManager.AddCity(new City(citiesDb[2], 6));
-            TourManager.AddCity(new City(citiesDb[9], 50));
+            TourManager.AddCity(new AlgCity(citiesDb[0], 5));
+            TourManager.AddCity(new AlgCity(citiesDb[3], 5));
+            TourManager.AddCity(new AlgCity(citiesDb[7], 5));
+            TourManager.AddCity(new AlgCity(citiesDb[2], 6));
+            TourManager.AddCity(new AlgCity(citiesDb[9], 50));
             TourManager.SetMaxFuelConsump(20);
             TourManager.TruckLoad = 80;
 

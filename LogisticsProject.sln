@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2048
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogisticsProject", "LogisticsProject\LogisticsProject.csproj", "{38EBEAC1-4625-402F-9337-A1F0FEACFB0E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogisticsProject.WebUI", "LogisticsProject\LogisticsProject.WebUI.csproj", "{38EBEAC1-4625-402F-9337-A1F0FEACFB0E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HttpClient", "HttpClient\HttpClient.csproj", "{781FA26E-DA93-4583-AEE8-A0ECE205E0B8}"
 EndProject
@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoogleApiClient", "GoogleAp
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TravellingSalesmanProblem", "TravellingSalesmanProblem\TravellingSalesmanProblem.csproj", "{990A0731-52BA-4047-AF80-77D7A6EC45A1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogisticsProject.Domain", "LogisticsProject.Domain\LogisticsProject.Domain.csproj", "{A0F9B56A-9B4E-4372-982E-5F366754595E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,6 +38,10 @@ Global
 		{990A0731-52BA-4047-AF80-77D7A6EC45A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{990A0731-52BA-4047-AF80-77D7A6EC45A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{990A0731-52BA-4047-AF80-77D7A6EC45A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A0F9B56A-9B4E-4372-982E-5F366754595E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0F9B56A-9B4E-4372-982E-5F366754595E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0F9B56A-9B4E-4372-982E-5F366754595E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0F9B56A-9B4E-4372-982E-5F366754595E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

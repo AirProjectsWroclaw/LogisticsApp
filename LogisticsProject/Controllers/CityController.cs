@@ -1,4 +1,6 @@
 ﻿using HttpClientLib;
+using LogisticsProject.Domain;
+using LogisticsProject.Domain.Entities;
 using LogisticsProject.Models;
 using System;
 using System.Collections.Generic;
@@ -18,7 +20,7 @@ namespace LogisticsProject.Controllers
         {
             List<City> cities = null;
 
-            using(var db = new ApplicationDbContext())
+            using(var db = new EFDbContext())
             {
                 var query = from city in db.Cities
                             orderby city.CityName
@@ -42,7 +44,7 @@ namespace LogisticsProject.Controllers
         // GET: City/Create
         public ActionResult Create()
         {
-            using(var db = new ApplicationDbContext())
+            using(var db = new EFDbContext())
             {
                 var city = new City { CityName = "Gostyń", Latitude = 51.8786, Longitude = 17.01215};
                 db.Cities.Add(city);

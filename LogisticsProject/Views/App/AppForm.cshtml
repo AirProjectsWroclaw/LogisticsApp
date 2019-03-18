@@ -38,60 +38,60 @@
 
     function Send() {
         var obj;
-       // var d = { "ordersList": cart };
-        var d =
-            [
-                /*{
-                    "Masa": "5",
-                    "Odjazd": "Munich",
-                    "Przyjazd": "Łódź"
-                },
-                {
-                    "Masa": "5",
-                    "Odjazd": "Munich",
-                    "Przyjazd": "Vienna"
-                },*/
-                {
-                    "Masa": "17",
-                    "Odjazd": "Munich",
-                    "Przyjazd": "Warsaw"
-                },
-                {
-                    "Masa": "2",
-                    "Odjazd": "Munich",
-                    "Przyjazd": "Gdańsk"
-                },
-                {
-                    "Masa": "5",
-                    "Odjazd": "Munich",
-                    "Przyjazd": "Brussels"
-                },
-                {
-                    "Masa": "5",
-                    "Odjazd": "Munich",
-                    "Przyjazd": "Amsterdam"
-                },
-                {
-                    "Masa": "5",
-                    "Odjazd": "Munich",
-                    "Przyjazd": "Rome"
-                },
-                {
-                    "Masa": "2",
-                    "Odjazd": "Munich",
-                    "Przyjazd": "Kraków"
-                },
-                {
-                    "Masa": "2",
-                    "Odjazd": "Munich",
-                    "Przyjazd": "Katowice"
-                },
-                {
-                    "Masa": "2",
-                    "Odjazd": "Munich",
-                    "Przyjazd": "Lisbon"
-                }
-            ];
+        var d = cart ;
+        //var d =
+        //    [
+        //        /*{
+        //            "Masa": "5",
+        //            "Odjazd": "Munich",
+        //            "Przyjazd": "Łódź"
+        //        },
+        //        {
+        //            "Masa": "5",
+        //            "Odjazd": "Munich",
+        //            "Przyjazd": "Vienna"
+        //        },*/
+        //        {
+        //            "Masa": "17",
+        //            "Odjazd": "Munich",
+        //            "Przyjazd": "Warsaw"
+        //        },
+        //        {
+        //            "Masa": "2",
+        //            "Odjazd": "Munich",
+        //            "Przyjazd": "Gdańsk"
+        //        },
+        //        {
+        //            "Masa": "5",
+        //            "Odjazd": "Munich",
+        //            "Przyjazd": "Brussels"
+        //        },
+        //        {
+        //            "Masa": "5",
+        //            "Odjazd": "Munich",
+        //            "Przyjazd": "Amsterdam"
+        //        },
+        //        {
+        //            "Masa": "5",
+        //            "Odjazd": "Munich",
+        //            "Przyjazd": "Rome"
+        //        },
+        //        {
+        //            "Masa": "2",
+        //            "Odjazd": "Munich",
+        //            "Przyjazd": "Kraków"
+        //        },
+        //        {
+        //            "Masa": "2",
+        //            "Odjazd": "Munich",
+        //            "Przyjazd": "Katowice"
+        //        },
+        //        {
+        //            "Masa": "2",
+        //            "Odjazd": "Munich",
+        //            "Przyjazd": "Lisbon"
+        //        }
+        //    ];
         $.ajax({
             type: "POST",
             url: "/App/AppForm",
@@ -141,9 +141,9 @@
     <div class="form-group">
 
         Z:
-        @Html.DropDownList("citiesFrom", ViewData["citiesFrom"] as IEnumerable<SelectListItem>, htmlAttributes: new { @class = "form-control", @id = "pierwsze" })
+        @Html.DropDownList("CitiesFrom", ViewData["CitiesFrom"] as IEnumerable<SelectListItem>, htmlAttributes: new { @class = "form-control", @id = "pierwsze" })
         Do:
-        @Html.DropDownList("citiesTo", ViewData["citiesTo"] as IEnumerable<SelectListItem>, htmlAttributes: new { @class = "form-control", @id = "drugie" })
+        @Html.DropDownList("CitiesTo", ViewData["CitiesTo"] as IEnumerable<SelectListItem>, htmlAttributes: new { @class = "form-control", @id = "drugie" })
         Masa:
         <input type="text" id="weightId" class="form-control" />
 

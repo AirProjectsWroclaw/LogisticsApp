@@ -1,4 +1,6 @@
-﻿using System;
+﻿using LogisticsProject.Domain;
+using LogisticsProject.Domain.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,7 +25,7 @@ namespace TravellingSalesmanProblem
             this.y = rnd.Next(0, 201);
         }
 
-        public AlgCity(LogisticsProject.Models.City city, double weight)
+        public AlgCity(City city, double weight)
         {
             this.CityId = city.CityId;
             this.CityName = city.CityName;
@@ -49,12 +51,12 @@ namespace TravellingSalesmanProblem
             //return Math.Sqrt(xDistance * xDistance + yDistance * yDistance);
             if (!TourManager.IsRoutesListSet())
             {
-                using (LogisticsProject.Models.ApplicationDbContext db = new LogisticsProject.Models.ApplicationDbContext())
+                using (EFDbContext db = new EFDbContext())
                 {
-                    List<LogisticsProject.Models.Route> routes = (from r in db.Routes.Include("cityFrom").Include("cityTo")
+                    List<Route> routes = (from r in db.Routes.Include("cityFrom").Include("cityTo")
                                                                   select r).ToList();
                     TourManager.SetRoutesList(routes);
-                    LogisticsProject.Models.Route route = (from r in db.Routes
+                    Route route = (from r in db.Routes
                                                            where (r.cityFrom.CityId == this.CityId
                                                            && r.cityTo.CityId == city.CityId)
                                                            select r).First();
@@ -63,8 +65,8 @@ namespace TravellingSalesmanProblem
             }
             else
             {
-                List<LogisticsProject.Models.Route> routes = TourManager.GetRoutesList();
-                LogisticsProject.Models.Route route = (from r in routes
+                List<Route> routes = TourManager.GetRoutesList();
+                Route route = (from r in routes
                                                        where (r.cityFrom.CityId == this.CityId
                                                        && r.cityTo.CityId == city.CityId)
                                                        select r).First();

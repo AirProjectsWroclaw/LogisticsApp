@@ -1,10 +1,12 @@
-namespace LogisticsProject.Models
+namespace LogisticsProject.Domain
 {
+    using LogisticsProject.Domain;
+    using LogisticsProject.Domain.Entities;
     using System;
     using System.Data.Entity;
     using System.Linq;
 
-    public class ApplicationDbContext : DbContext
+    public class EFDbContext : DbContext
     {
         // Your context has been configured to use a 'Model1' connection string from your application's 
         // configuration file (App.config or Web.config). By default, this connection string targets the 
