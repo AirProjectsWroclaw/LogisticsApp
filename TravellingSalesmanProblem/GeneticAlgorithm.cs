@@ -52,8 +52,8 @@ namespace TravellingSalesmanProblem
                 {
                     int tourPos2 = (int)((tour.TourSize()-1) * rand.Next(0,10)/10.0 +1);
 
-                    City city1 = tour.GetCity(tourPos1);
-                    City city2 = tour.GetCity(tourPos2);
+                    AlgCity city1 = tour.GetCity(tourPos1);
+                    AlgCity city2 = tour.GetCity(tourPos2);
 
                     tour.SetCity(tourPos2, city1);
                     tour.SetCity(tourPos1, city2);

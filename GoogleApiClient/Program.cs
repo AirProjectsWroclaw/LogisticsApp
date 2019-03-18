@@ -10,6 +10,8 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using static GoogleApiClient.Program.GoogleCityResponse;
 using static GoogleApiClient.Program.GoogleRouteResponse;
+using LogisticsProject.Domain;
+using LogisticsProject.Domain.Entities;
 
 namespace GoogleApiClient
 {
@@ -225,7 +227,7 @@ namespace GoogleApiClient
                 }
 
 
-                using (var db = new ApplicationDbContext())
+                using (var db = new EFDbContext())
                 {
                     foreach (City c in citiesList)
                     {
@@ -268,7 +270,7 @@ namespace GoogleApiClient
                 List<City> citiesList = new List<City>();
                 List<Route> routesList = new List<Route>();
 
-                using (var db = new ApplicationDbContext())
+                using (var db = new EFDbContext())
                 {
                     var query = from city in db.Cities
                                 orderby city.CityName
@@ -300,7 +302,7 @@ namespace GoogleApiClient
 
 
 
-                using (var db = new ApplicationDbContext())
+                using (var db = new EFDbContext())
                 {
                     foreach (Route r in routesList)
                     {

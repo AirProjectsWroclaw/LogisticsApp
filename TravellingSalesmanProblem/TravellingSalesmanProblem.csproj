@@ -51,7 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Application.cs" />
-    <Compile Include="City.cs" />
+    <Compile Include="AlgCity.cs" />
     <Compile Include="GeneticAlgorithm.cs" />
     <Compile Include="Population.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -63,9 +63,13 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\LogisticsProject\LogisticsProject.csproj">
+    <ProjectReference Include="..\LogisticsProject.Domain\LogisticsProject.Domain.csproj">
+      <Project>{a0f9b56a-9b4e-4372-982e-5f366754595e}</Project>
+      <Name>LogisticsProject.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LogisticsProject\LogisticsProject.WebUI.csproj">
       <Project>{38ebeac1-4625-402f-9337-a1f0feacfb0e}</Project>
-      <Name>LogisticsProject</Name>
+      <Name>LogisticsProject.WebUI</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

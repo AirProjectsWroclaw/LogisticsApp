@@ -9,7 +9,7 @@ namespace TravellingSalesmanProblem
     public class Tour
     {
         // Holds tour of cities
-        private List<City> tour = new List<City>();
+        private List<AlgCity> tour = new List<AlgCity>();
         //Cache
         private double fitness = 0;
         private int distance = 0;
@@ -26,7 +26,7 @@ namespace TravellingSalesmanProblem
             }
         }
 
-        public Tour(List<City> tour)
+        public Tour(List<AlgCity> tour)
         {
             this.tour = tour;
         }
@@ -41,12 +41,12 @@ namespace TravellingSalesmanProblem
             SetMaxFuel(fuel);
         }
 
-        public City GetCity(int cityIndex)
+        public AlgCity GetCity(int cityIndex)
         {
             return tour[cityIndex];
         }
 
-        public void SetCity(int cityIndex, City city)
+        public void SetCity(int cityIndex, AlgCity city)
         {
             tour[cityIndex] = city;
             fitness = 0;
@@ -75,9 +75,9 @@ namespace TravellingSalesmanProblem
 
                 for(int cityIndex = 0; cityIndex < TourSize(); cityIndex++)
                 {
-                    City fromCity = GetCity(cityIndex);
+                    AlgCity fromCity = GetCity(cityIndex);
 
-                    City destinationCity;
+                    AlgCity destinationCity;
 
                     if(cityIndex+1 < TourSize())
                     {
@@ -106,7 +106,7 @@ namespace TravellingSalesmanProblem
         }
 
         //Check if tour constains a city
-        public Boolean ContainsCity(City city)
+        public Boolean ContainsCity(AlgCity city)
         {
             return tour.Contains(city);
         }

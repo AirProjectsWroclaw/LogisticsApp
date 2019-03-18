@@ -1,4 +1,6 @@
-﻿using LogisticsProject.Models;
+﻿using LogisticsProject.Domain;
+using LogisticsProject.Domain.Entities;
+using LogisticsProject.Models;
 using System;
 using System.Net;
 using System.Net.Http;

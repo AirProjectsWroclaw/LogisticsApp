@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace LogisticsProject.Models
+namespace LogisticsProject.Domain.Entities
 {
     public class Route
     {

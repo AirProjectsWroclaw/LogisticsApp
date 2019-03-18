@@ -1,4 +1,6 @@
-﻿using System;
+﻿using LogisticsProject.Domain;
+using LogisticsProject.Domain.Entities;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;

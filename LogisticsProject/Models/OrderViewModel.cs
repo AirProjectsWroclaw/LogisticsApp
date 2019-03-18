@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -23,6 +24,7 @@ namespace LogisticsProject.Models
             set { przyjazd = value; }
         }
 
+        [Required]
         private double masa;
 
         public double Masa

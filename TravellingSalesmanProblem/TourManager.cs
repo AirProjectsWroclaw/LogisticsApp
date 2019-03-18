@@ -9,18 +9,18 @@ namespace TravellingSalesmanProblem
 {
     class TourManager
     {
-        private static List<City> destinationCities = new List<City>();
+        private static List<AlgCity> destinationCities = new List<AlgCity>();
         private static double maxFuelConsumption;
         private static double truckLoad;
 
         public static double TruckLoad { get => truckLoad; set => truckLoad = value; }
 
-        public static void AddCity(City city)
+        public static void AddCity(AlgCity city)
         {
             destinationCities.Add(city);
         }
 
-        public static City GetCity(int index)
+        public static AlgCity GetCity(int index)
         {
             return destinationCities[index];
         }

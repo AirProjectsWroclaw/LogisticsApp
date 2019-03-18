@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 
-namespace LogisticsProject.Models
+namespace LogisticsProject.Domain.Entities
 {
     public class City : SelectListItem
     {
